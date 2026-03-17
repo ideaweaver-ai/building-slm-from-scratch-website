@@ -42,7 +42,7 @@ function Hero() {
       <div className="pointer-events-none absolute -right-40 -bottom-40 h-[400px] w-[400px] rounded-full bg-accent/20 blur-3xl" />
 
       <div className="relative mx-auto max-w-4xl text-center">
-        <Badge>30-Day Hands-On Program</Badge>
+        <Badge>Starts April 2026 &mdash; 30-Day Hands-On Program</Badge>
 
         <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl">
           Stop Using AI.{" "}
@@ -432,6 +432,14 @@ function WhoIsThisFor() {
 
 /* ───────── Instructor ───────── */
 
+const modelsBuilt = [
+  { name: "Gemma 3", url: "https://huggingface.co/lakhera2023/gemma3-from-scratch/tree/main" },
+  { name: "DeepSeek", url: "https://huggingface.co/lakhera2023/deepseek-children-stories" },
+  { name: "Qwen", url: "https://huggingface.co/lakhera2023/Qwen-model" },
+  { name: "DevOps SLM", url: "https://huggingface.co/lakhera2023/devops-slm" },
+  { name: "LLaMA 4", url: "https://huggingface.co/lakhera2023/llama4-debugmodel-10k" },
+];
+
 function Instructor() {
   return (
     <section className="bg-white px-6 py-24 sm:px-12">
@@ -450,12 +458,19 @@ function Instructor() {
               Founder, IdeaWeaver AI Labs
             </p>
             <p className="mt-4 text-gray leading-relaxed">
-              DevOps expert and author of multiple books, Prashant has spent
-              years helping engineers level up through hands-on, practical
-              teaching. As a YouTube educator and community builder, he
-              specializes in breaking down complex topics into digestible,
-              actionable lessons. This course brings his proven teaching approach
-              to the world of AI and language models.
+              DevOps expert and author of the book{" "}
+              <a
+                href="https://plakhera.gumroad.com/l/BuildingASmallLanguageModelfromScratch"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary underline decoration-primary/30 hover:decoration-primary"
+              >
+                &ldquo;Building a Small Language Model from Scratch&rdquo;
+              </a>
+              , Prashant doesn&apos;t just teach how to build language models &mdash; he has
+              built several himself. As a YouTube educator and community builder,
+              he specializes in breaking down complex topics into digestible,
+              actionable lessons.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               {[
@@ -474,6 +489,29 @@ function Instructor() {
             </div>
           </div>
         </div>
+
+        {/* Models Built */}
+        <div className="mt-12">
+          <h3 className="mb-6 text-center text-lg font-bold text-dark">
+            Models Built by Prashant (on Hugging Face)
+          </h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            {modelsBuilt.map((m) => (
+              <a
+                key={m.name}
+                href={m.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-gray-light bg-gray-light px-4 py-2.5 text-sm font-semibold text-dark transition hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <svg className="h-4 w-4 text-gray" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16c-.18-.432-.6-.72-1.08-.72h-1.2c-.12 0-.24.024-.348.06l-1.332.48c-.18.06-.372.06-.552 0l-1.332-.48A.936.936 0 0011.376 7.44h-1.2c-.48 0-.9.288-1.08.72L7.872 11.28a.96.96 0 00.072.876l2.28 3.36c.18.264.48.42.804.42h1.944c.324 0 .624-.156.804-.42l2.28-3.36a.96.96 0 00.072-.876L14.904 8.16h2.664z" />
+                </svg>
+                {m.name}
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -486,24 +524,28 @@ const batches = [
     label: "Weekday Morning",
     days: "Monday – Wednesday",
     time: "7:00 – 8:00 AM PST",
+    dates: "Apr 6 – Apr 29",
     link: "https://www.ideaweaver.ai/purchase?product_id=6671439",
   },
   {
     label: "Weekday Evening",
     days: "Monday – Wednesday",
     time: "7:00 – 8:00 PM PST",
+    dates: "Apr 6 – Apr 29",
     link: "https://www.ideaweaver.ai/purchase?product_id=6671441",
   },
   {
     label: "Weekend Morning",
     days: "Saturday – Sunday",
     time: "8:00 – 9:30 AM PST",
+    dates: "Apr 4 – Apr 26",
     link: "https://www.ideaweaver.ai/purchase?product_id=6671442",
   },
   {
     label: "Weekend Evening",
     days: "Friday – Saturday",
     time: "7:00 – 8:30 PM PST",
+    dates: "Apr 3 – Apr 25",
     link: "https://www.ideaweaver.ai/purchase?product_id=6671443",
   },
 ];
@@ -550,7 +592,10 @@ function Pricing() {
               <p className="text-xs font-semibold uppercase tracking-widest text-primary-light">
                 {b.label}
               </p>
-              <div className="mt-4 flex items-center gap-3">
+              <p className="mt-2 text-sm font-semibold text-amber-300">
+                {b.dates}
+              </p>
+              <div className="mt-3 flex items-center gap-3">
                 <svg className="h-5 w-5 shrink-0 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>

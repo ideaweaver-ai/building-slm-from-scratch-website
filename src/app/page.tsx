@@ -6,7 +6,7 @@ import { useState } from "react";
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
+    <span className="inline-block rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold text-violet-300 tracking-wide">
       {children}
     </span>
   );
@@ -16,19 +16,46 @@ function SectionHeading({
   badge,
   title,
   subtitle,
+  light,
 }: {
   badge?: string;
   title: string;
   subtitle?: string;
+  light?: boolean;
 }) {
   return (
     <div className="mx-auto mb-12 max-w-2xl text-center">
       {badge && <Badge>{badge}</Badge>}
-      <h2 className="mt-4 text-3xl font-bold tracking-tight text-dark sm:text-4xl">
+      <h2 className={`mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl ${light ? "text-white" : "text-white"}`}>
         {title}
       </h2>
-      {subtitle && <p className="mt-4 text-lg text-gray">{subtitle}</p>}
+      {subtitle && <p className="mt-4 text-base text-white/50">{subtitle}</p>}
     </div>
+  );
+}
+
+/* ───────── Nav ───────── */
+
+function Nav() {
+  return (
+    <nav className="fixed top-0 right-0 left-0 z-50 border-b border-white/5 bg-[#080b14]/90 px-6 py-4 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-6xl items-center justify-between">
+        <span className="text-lg font-bold text-white">
+          IdeaWeaver<span className="text-violet-400"> AI Labs</span>
+        </span>
+        <div className="hidden items-center gap-6 text-sm md:flex">
+          <a href="#pricing" className="text-white/50 transition hover:text-white">
+            Pricing
+          </a>
+          <a
+            href="#pricing"
+            className="rounded-lg bg-violet-600 px-4 py-2 font-semibold text-white transition hover:bg-violet-500"
+          >
+            Enroll Now
+          </a>
+        </div>
+      </div>
+    </nav>
   );
 }
 
@@ -36,125 +63,120 @@ function SectionHeading({
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-dark via-dark-light to-dark px-6 pt-32 pb-20 text-white sm:px-12">
-      {/* Decorative blobs */}
-      <div className="pointer-events-none absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-primary/20 blur-3xl" />
-      <div className="pointer-events-none absolute -right-40 -bottom-40 h-[400px] w-[400px] rounded-full bg-accent/20 blur-3xl" />
+    <section className="relative min-h-screen overflow-hidden bg-[#080b14] px-6 pt-40 pb-28 text-white sm:px-12">
+      {/* Grid pattern */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
+      {/* Glow blobs */}
+      <div className="pointer-events-none absolute top-0 left-1/4 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/20 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-0 right-1/4 h-[400px] w-[400px] translate-x-1/2 translate-y-1/2 rounded-full bg-blue-600/15 blur-[100px]" />
 
       <div className="relative mx-auto max-w-4xl text-center">
-        <Badge>Starts April 2026 &mdash; 30-Day Hands-On Program</Badge>
+        <Badge>2-Day Workshop &mdash; April 24&ndash;26, 2026</Badge>
 
-        <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl">
+        <h1 className="mt-8 text-5xl font-black leading-[1.1] tracking-tight sm:text-7xl">
           Stop Using AI.{" "}
-          <span className="bg-gradient-to-r from-primary-light to-accent-light bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-blue-400 bg-clip-text text-transparent">
             Start Building It.
           </span>
         </h1>
 
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-white/70 sm:text-xl">
-          In just 30&nbsp;days, learn how to build your own small language model
-          from scratch&nbsp;&mdash; no prior AI experience required.
+        <p className="mx-auto mt-8 max-w-2xl text-lg text-white/50 sm:text-xl leading-relaxed">
+          In just 2&nbsp;days, build your own Small Language Model based on the{" "}
+          <span className="text-violet-300 font-semibold">Gemma&nbsp;4 architecture</span>
+          {" "}— from scratch, hands-on.
         </p>
 
-        <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <a
             href="#pricing"
-            className="animate-pulse-glow rounded-xl bg-gradient-to-r from-primary to-accent px-8 py-4 text-lg font-bold shadow-lg transition hover:scale-105"
+            className="rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-10 py-4 text-lg font-bold text-white shadow-[0_0_40px_rgba(124,58,237,0.4)] transition hover:scale-105 hover:shadow-[0_0_60px_rgba(124,58,237,0.5)]"
           >
-            Enroll Now for $49
-          </a>
-          <a
-            href="#curriculum"
-            className="rounded-xl border border-white/20 px-8 py-4 text-lg font-semibold transition hover:bg-white/10"
-          >
-            View Curriculum
+            Enroll Now for $29
           </a>
         </div>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-4 text-sm text-white/60">
-          {["Beginner Friendly", "100% Hands-On", "GPU Provided"].map(
-            (t) => (
-              <span
-                key={t}
-                className="flex items-center gap-1.5 rounded-full border border-white/10 px-4 py-1.5"
-              >
-                <svg
-                  className="h-4 w-4 text-green-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                {t}
-              </span>
-            )
-          )}
+        <div className="mt-10 flex flex-wrap justify-center gap-4 text-sm">
+          {["Beginner Friendly", "100% Hands-On"].map((t) => (
+            <span
+              key={t}
+              className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-white/60 backdrop-blur"
+            >
+              <svg className="h-3.5 w-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              {t}
+            </span>
+          ))}
+        </div>
+
+        {/* Date countdown strip */}
+        <div className="mt-16 grid grid-cols-2 divide-x divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur sm:grid-cols-2 max-w-lg mx-auto">
+          <div className="px-8 py-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-white/40">Morning Batch</p>
+            <p className="mt-1 text-base font-bold text-white">Sat–Sun, Apr 25–26</p>
+            <p className="text-sm text-violet-300">8:00–10:00 AM PST</p>
+          </div>
+          <div className="px-8 py-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-white/40">Evening Batch</p>
+            <p className="mt-1 text-base font-bold text-white">Fri–Sat, Apr 24–25</p>
+            <p className="text-sm text-violet-300">7:00–9:00 PM PST</p>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-/* ───────── Why This Course ───────── */
+/* ───────── Why This Workshop ───────── */
 
 function WhyThisCourse() {
   return (
-    <section className="bg-white px-6 py-24 sm:px-12">
+    <section className="bg-[#0d1120] px-6 py-24 sm:px-12">
       <div className="mx-auto max-w-5xl">
         <SectionHeading
           badge="The Problem"
           title="Everyone Uses AI. Almost No One Understands It."
           subtitle="Most people interact with ChatGPT daily but have zero idea how it actually works under the hood."
+          light
         />
 
-        <div className="grid gap-8 md:grid-cols-2">
-          {/* Problem */}
-          <div className="rounded-2xl border border-red-100 bg-red-50/50 p-8">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-red-100 text-2xl">
-              &#x26A0;
-            </div>
-            <h3 className="text-xl font-bold text-dark">Without This Course</h3>
-            <ul className="mt-4 space-y-3 text-gray">
-              <li className="flex gap-2">
-                <span className="text-red-400">&#x2717;</span> You copy-paste
-                prompts without understanding
-              </li>
-              <li className="flex gap-2">
-                <span className="text-red-400">&#x2717;</span> AI feels like
-                magic — you can&apos;t debug or improve it
-              </li>
-              <li className="flex gap-2">
-                <span className="text-red-400">&#x2717;</span> You rely on
-                expensive APIs with no alternative
-              </li>
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-8">
+            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-red-500/10 text-xl">⚠️</div>
+            <h3 className="text-lg font-bold text-white">Without This Workshop</h3>
+            <ul className="mt-4 space-y-3 text-sm text-white/50">
+              {[
+                "You copy-paste prompts without understanding",
+                "AI feels like magic — you can't debug or improve it",
+                "You rely on expensive APIs with no alternative",
+              ].map((item) => (
+                <li key={item} className="flex gap-2.5">
+                  <span className="mt-0.5 shrink-0 text-red-400">✗</span> {item}
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Solution */}
-          <div className="rounded-2xl border border-green-100 bg-green-50/50 p-8">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-2xl">
-              &#x2728;
-            </div>
-            <h3 className="text-xl font-bold text-dark">With This Course</h3>
-            <ul className="mt-4 space-y-3 text-gray">
-              <li className="flex gap-2">
-                <span className="text-green-500">&#x2713;</span> You understand
-                how LLMs actually work
-              </li>
-              <li className="flex gap-2">
-                <span className="text-green-500">&#x2713;</span> You can build,
-                train, and evaluate your own model
-              </li>
-              <li className="flex gap-2">
-                <span className="text-green-500">&#x2713;</span> You stand out
-                as an engineer who truly gets AI
-              </li>
+          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-8">
+            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/10 text-xl">✨</div>
+            <h3 className="text-lg font-bold text-white">With This Workshop</h3>
+            <ul className="mt-4 space-y-3 text-sm text-white/50">
+              {[
+                "You understand how LLMs actually work",
+                "You can build, train, and evaluate your own model",
+                "You stand out as an engineer who truly gets AI",
+              ].map((item) => (
+                <li key={item} className="flex gap-2.5">
+                  <span className="mt-0.5 shrink-0 text-emerald-400">✓</span> {item}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -166,174 +188,39 @@ function WhyThisCourse() {
 /* ───────── What You Will Learn ───────── */
 
 const learnings = [
-  {
-    icon: "🔥",
-    title: "PyTorch Fundamentals",
-    desc: "Tensors, autograd, and neural network basics from the ground up.",
-  },
-  {
-    icon: "🔤",
-    title: "Tokenization",
-    desc: "How raw text becomes numerical tokens that models understand.",
-  },
-  {
-    icon: "📐",
-    title: "Positional Encoding",
-    desc: "Why order matters and how transformers keep track of it.",
-  },
-  {
-    icon: "🎯",
-    title: "Attention Mechanism",
-    desc: "The breakthrough idea behind every modern LLM, explained clearly.",
-  },
-  {
-    icon: "⚡",
-    title: "KV Cache & Optimization",
-    desc: "How inference is made fast and efficient in production.",
-  },
-  {
-    icon: "🧠",
-    title: "Build Your Own LLM",
-    desc: "Combine everything to train a working language model end to end.",
-  },
+  { icon: "🔤", title: "Tokenization", desc: "How raw text becomes numerical tokens that models understand." },
+  { icon: "📐", title: "Positional Encoding", desc: "Why order matters and how transformers keep track of it." },
+  { icon: "🎯", title: "Attention Mechanism", desc: "The breakthrough idea behind every modern LLM, explained clearly." },
+  { icon: "⚡", title: "KV Cache & Optimization", desc: "How inference is made fast and efficient in production." },
+  { icon: "🧠", title: "Build Your Own LLM", desc: "Combine everything to train a working language model end to end." },
 ];
 
 function WhatYouLearn() {
   return (
-    <section className="bg-gray-light px-6 py-24 sm:px-12">
+    <section className="bg-[#080b14] px-6 py-24 sm:px-12">
       <div className="mx-auto max-w-5xl">
         <SectionHeading
-          badge="Curriculum Highlights"
-          title="What You Will Learn"
+          badge="Workshop Topics"
+          title="What You Will Build & Learn"
           subtitle="A practical, no-fluff curriculum designed for builders."
+          light
         />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {learnings.map((l) => (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {learnings.map((l, i) => (
             <div
               key={l.title}
-              className="rounded-2xl border border-white bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              className="group relative overflow-hidden rounded-2xl border border-white/8 bg-white/3 p-6 transition hover:border-violet-500/40 hover:bg-violet-500/5"
             >
-              <div className="mb-3 text-3xl">{l.icon}</div>
-              <h3 className="text-lg font-bold text-dark">{l.title}</h3>
-              <p className="mt-2 text-sm text-gray">{l.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ───────── Curriculum ───────── */
-
-const weeks = [
-  {
-    week: 1,
-    title: "PyTorch & Neural Networks",
-    color: "from-purple-500 to-indigo-500",
-    items: [
-      "Build a strong foundation in PyTorch and neural networks",
-      "Understand tensors, forward passes, backward passes, and training loops",
-      "Hands-on: Implement and train a simple neural network using PyTorch",
-    ],
-  },
-  {
-    week: 2,
-    title: "Tokenizers & Positional Encoding",
-    color: "from-indigo-500 to-blue-500",
-    items: [
-      "Learn how raw text is converted into tokens and why tokenization matters",
-      "Explore positional encoding techniques used in transformer models",
-      "Hands-on: Experiment with different tokenizers and positional encodings",
-    ],
-  },
-  {
-    week: 3,
-    title: "Attention Mechanisms & KV Cache",
-    color: "from-blue-500 to-cyan-500",
-    items: [
-      "Deep dive into attention, self-attention, and key-value caching",
-      "Understand how modern LLMs optimize inference performance",
-      "Hands-on: Implement attention concepts and observe the impact of KV cache",
-    ],
-  },
-  {
-    week: 4,
-    title: "Building a Small Language Model (SLM) from Scratch",
-    color: "from-cyan-500 to-emerald-500",
-    items: [
-      "Bring everything together by building a small language model from scratch",
-      "Learn model architecture, training workflows, and real-world constraints",
-      "Hands-on: Build, train, and evaluate a small language model end to end",
-    ],
-  },
-];
-
-function Curriculum() {
-  return (
-    <section id="curriculum" className="bg-white px-6 py-24 sm:px-12">
-      <div className="mx-auto max-w-4xl">
-        <SectionHeading
-          badge="4-Week Roadmap"
-          title="Course Curriculum"
-          subtitle="Structured weekly milestones so you never feel lost."
-        />
-
-        <div className="mb-8 text-center">
-          <a
-            href="/curriculum.pdf"
-            target="_blank"
-            className="inline-flex items-center gap-2 rounded-xl border border-primary/20 bg-primary/5 px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary/10"
-          >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            Download Full Curriculum (PDF)
-          </a>
-        </div>
-
-        <div className="relative space-y-8">
-          {/* Timeline line */}
-          <div className="absolute top-0 left-6 hidden h-full w-0.5 bg-gradient-to-b from-primary to-accent md:block" />
-
-          {weeks.map((w) => (
-            <div key={w.week} className="relative flex gap-6">
-              {/* dot */}
-              <div className="relative z-10 hidden md:block">
-                <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br ${w.color} text-sm font-bold text-white shadow-lg`}
-                >
-                  W{w.week}
-                </div>
+              <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100"
+                style={{ background: "radial-gradient(circle at 50% 0%, rgba(124,58,237,0.08) 0%, transparent 70%)" }}
+              />
+              <div className="mb-4 text-3xl">{l.icon}</div>
+              <div className="mb-1 text-xs font-semibold uppercase tracking-widest text-violet-400">
+                Step {i + 1}
               </div>
-
-              <div className="flex-1 rounded-2xl border border-gray-light bg-white p-6 shadow-sm transition hover:shadow-md">
-                <div className="mb-1 text-xs font-semibold uppercase tracking-widest text-primary">
-                  Week {w.week}
-                </div>
-                <h3 className="text-xl font-bold text-dark">{w.title}</h3>
-                <ul className="mt-3 space-y-2 text-sm text-gray">
-                  {w.items.map((item) => (
-                    <li key={item} className="flex gap-2">
-                      <svg
-                        className="mt-0.5 h-4 w-4 shrink-0 text-primary"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <h3 className="text-base font-bold text-white">{l.title}</h3>
+              <p className="mt-2 text-sm text-white/40 leading-relaxed">{l.desc}</p>
             </div>
           ))}
         </div>
@@ -346,32 +233,22 @@ function Curriculum() {
 
 function HandsOn() {
   const points = [
-    {
-      title: "Build Every Week",
-      desc: "Every single week includes real implementation — not just slides.",
-    },
-    {
-      title: "No Boring Theory",
-      desc: "Concepts are taught through code, not endless equations.",
-    },
-    {
-      title: "Step-by-Step",
-      desc: "Each exercise builds on the last so you never feel overwhelmed.",
-    },
+    { title: "No Boring Theory", desc: "Concepts are taught through code, not endless equations.", icon: "💡" },
+    { title: "Step-by-Step", desc: "Each exercise builds on the last so you never feel overwhelmed.", icon: "🪜" },
   ];
 
   return (
-    <section className="bg-gradient-to-br from-dark via-dark-light to-dark px-6 py-24 text-white sm:px-12">
-      <div className="mx-auto max-w-5xl text-center">
-        <SectionHeading
-          badge="Learn by Doing"
-          title="100% Hands-On. Zero Fluff."
-        />
-        <div className="grid gap-8 sm:grid-cols-3">
+    <section className="bg-[#0d1120] px-6 py-24 sm:px-12">
+      <div className="mx-auto max-w-5xl">
+        <SectionHeading badge="Learn by Doing" title="100% Hands-On. Zero Fluff." light />
+        <div className="grid gap-6 sm:grid-cols-2">
           {points.map((p) => (
-            <div key={p.title} className="rounded-2xl border border-white/10 bg-white/5 p-8">
-              <h3 className="text-xl font-bold">{p.title}</h3>
-              <p className="mt-3 text-white/60">{p.desc}</p>
+            <div key={p.title} className="flex gap-5 rounded-2xl border border-white/8 bg-white/3 p-8">
+              <div className="shrink-0 text-4xl">{p.icon}</div>
+              <div>
+                <h3 className="text-lg font-bold text-white">{p.title}</h3>
+                <p className="mt-2 text-sm text-white/40 leading-relaxed">{p.desc}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -384,44 +261,25 @@ function HandsOn() {
 
 function WhoIsThisFor() {
   const personas = [
-    {
-      icon: "🛠",
-      title: "DevOps Engineers",
-      desc: "Moving to AI and want a solid foundation in how LLMs work.",
-    },
-    {
-      icon: "💻",
-      title: "Software Engineers",
-      desc: "Curious about LLMs and want to go beyond just calling APIs.",
-    },
-    {
-      icon: "🌱",
-      title: "Beginners",
-      desc: "New to AI but want practical, hands-on skills — not just theory.",
-    },
-    {
-      icon: "📢",
-      title: "Content Creators & Educators",
-      desc: "Want a deeper understanding to create better AI content.",
-    },
+    { icon: "🛠", title: "DevOps Engineers", desc: "Moving to AI and want a solid foundation in how LLMs work." },
+    { icon: "💻", title: "Software Engineers", desc: "Curious about LLMs and want to go beyond just calling APIs." },
+    { icon: "🌱", title: "Beginners", desc: "New to AI but want practical, hands-on skills — not just theory." },
+    { icon: "📢", title: "Content Creators & Educators", desc: "Want a deeper understanding to create better AI content." },
   ];
 
   return (
-    <section className="bg-gray-light px-6 py-24 sm:px-12">
+    <section className="bg-[#080b14] px-6 py-24 sm:px-12">
       <div className="mx-auto max-w-5xl">
-        <SectionHeading
-          badge="Is This You?"
-          title="Who Is This Course For?"
-        />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <SectionHeading badge="Is This You?" title="Who Is This Workshop For?" light />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {personas.map((p) => (
             <div
               key={p.title}
-              className="rounded-2xl border border-white bg-white p-6 text-center shadow-sm"
+              className="rounded-2xl border border-white/8 bg-white/3 p-6 text-center transition hover:border-violet-500/30 hover:bg-violet-500/5"
             >
-              <div className="mb-3 text-4xl">{p.icon}</div>
-              <h3 className="font-bold text-dark">{p.title}</h3>
-              <p className="mt-2 text-sm text-gray">{p.desc}</p>
+              <div className="mb-4 text-4xl">{p.icon}</div>
+              <h3 className="font-bold text-white text-sm">{p.title}</h3>
+              <p className="mt-2 text-xs text-white/40 leading-relaxed">{p.desc}</p>
             </div>
           ))}
         </div>
@@ -442,47 +300,33 @@ const modelsBuilt = [
 
 function Instructor() {
   return (
-    <section className="bg-white px-6 py-24 sm:px-12">
+    <section className="bg-[#0d1120] px-6 py-24 sm:px-12">
       <div className="mx-auto max-w-4xl">
-        <SectionHeading badge="Your Instructor" title="Meet Prashant Lakhera" />
+        <SectionHeading badge="Your Instructor" title="Meet Prashant Lakhera" light />
 
-        <div className="flex flex-col items-center gap-8 md:flex-row">
-          {/* Avatar placeholder */}
-          <div className="flex h-48 w-48 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-6xl font-bold text-white shadow-xl">
+        <div className="flex flex-col items-center gap-10 rounded-2xl border border-white/8 bg-white/3 p-10 md:flex-row">
+          <div className="flex h-36 w-36 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-blue-600 text-5xl font-black text-white shadow-[0_0_60px_rgba(124,58,237,0.4)]">
             PL
           </div>
 
           <div>
-            <h3 className="text-2xl font-bold text-dark">Prashant Lakhera</h3>
-            <p className="mt-1 font-medium text-primary">
-              Founder, IdeaWeaver AI Labs
-            </p>
-            <p className="mt-4 text-gray leading-relaxed">
-              DevOps expert and author of the book{" "}
+            <h3 className="text-2xl font-bold text-white">Prashant Lakhera</h3>
+            <p className="mt-1 text-sm font-semibold text-violet-400">Founder, IdeaWeaver AI Labs</p>
+            <p className="mt-4 text-sm text-white/50 leading-relaxed">
+              DevOps expert and author of{" "}
               <a
                 href="https://plakhera.gumroad.com/l/BuildingASmallLanguageModelfromScratch"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-primary underline decoration-primary/30 hover:decoration-primary"
+                className="font-semibold text-violet-300 underline decoration-violet-500/40 hover:decoration-violet-300"
               >
                 &ldquo;Building a Small Language Model from Scratch&rdquo;
               </a>
-              , Prashant doesn&apos;t just teach how to build language models &mdash; he has
-              built several himself. As a YouTube educator and community builder,
-              he specializes in breaking down complex topics into digestible,
-              actionable lessons.
+              . Prashant has built several language models himself — all publicly available on Hugging Face. He specializes in breaking down complex topics into digestible, actionable lessons.
             </p>
-            <div className="mt-4 flex flex-wrap gap-3">
-              {[
-                "Published Author",
-                "YouTube Educator",
-                "Community Builder",
-                "DevOps → AI",
-              ].map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
-                >
+            <div className="mt-5 flex flex-wrap gap-2">
+              {["Published Author", "YouTube Educator", "Community Builder", "DevOps → AI"].map((tag) => (
+                <span key={tag} className="rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-300">
                   {tag}
                 </span>
               ))}
@@ -490,11 +334,10 @@ function Instructor() {
           </div>
         </div>
 
-        {/* Models Built */}
-        <div className="mt-12">
-          <h3 className="mb-6 text-center text-lg font-bold text-dark">
+        <div className="mt-8">
+          <p className="mb-4 text-center text-xs font-semibold uppercase tracking-widest text-white/30">
             Models Built by Prashant (on Hugging Face)
-          </h3>
+          </p>
           <div className="flex flex-wrap justify-center gap-3">
             {modelsBuilt.map((m) => (
               <a
@@ -502,11 +345,8 @@ function Instructor() {
                 href={m.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-gray-light bg-gray-light px-4 py-2.5 text-sm font-semibold text-dark transition hover:-translate-y-0.5 hover:shadow-md"
+                className="rounded-xl border border-white/8 bg-white/3 px-4 py-2 text-sm font-semibold text-white/60 transition hover:border-violet-500/30 hover:text-violet-300"
               >
-                <svg className="h-4 w-4 text-gray" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16c-.18-.432-.6-.72-1.08-.72h-1.2c-.12 0-.24.024-.348.06l-1.332.48c-.18.06-.372.06-.552 0l-1.332-.48A.936.936 0 0011.376 7.44h-1.2c-.48 0-.9.288-1.08.72L7.872 11.28a.96.96 0 00.072.876l2.28 3.36c.18.264.48.42.804.42h1.944c.324 0 .624-.156.804-.42l2.28-3.36a.96.96 0 00.072-.876L14.904 8.16h2.664z" />
-                </svg>
                 {m.name}
               </a>
             ))}
@@ -521,32 +361,18 @@ function Instructor() {
 
 const batches = [
   {
-    label: "Weekday Morning",
-    days: "Monday – Wednesday",
-    time: "7:00 – 8:00 AM PST",
-    dates: "Apr 6 – Apr 29",
-    link: "https://www.ideaweaver.ai/purchase?product_id=6671439",
-  },
-  {
-    label: "Weekday Evening",
-    days: "Monday – Wednesday",
-    time: "7:00 – 8:00 PM PST",
-    dates: "Apr 6 – Apr 29",
-    link: "https://www.ideaweaver.ai/purchase?product_id=6671441",
-  },
-  {
-    label: "Weekend Morning",
+    label: "Workshop — Morning Batch",
     days: "Saturday – Sunday",
-    time: "8:00 – 9:30 AM PST",
-    dates: "Apr 4 – Apr 26",
-    link: "https://www.ideaweaver.ai/purchase?product_id=6671442",
+    time: "8:00 – 10:00 AM PST",
+    dates: "Apr 25 – Apr 26",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6706367",
   },
   {
-    label: "Weekend Evening",
+    label: "Workshop — Evening Batch",
     days: "Friday – Saturday",
-    time: "7:00 – 8:30 PM PST",
-    dates: "Apr 3 – Apr 25",
-    link: "https://www.ideaweaver.ai/purchase?product_id=6671443",
+    time: "7:00 – 9:00 PM PST",
+    dates: "Apr 24 – Apr 25",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6706370",
   },
 ];
 
@@ -554,90 +380,62 @@ function Pricing() {
   return (
     <section
       id="pricing"
-      className="bg-gradient-to-br from-dark via-dark-light to-dark px-6 py-24 text-white sm:px-12"
+      className="relative bg-[#080b14] px-6 py-24 text-white sm:px-12"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <div className="h-[500px] w-[500px] rounded-full bg-violet-600/10 blur-[120px]" />
+      </div>
+
+      <div className="relative mx-auto max-w-4xl">
         <SectionHeading
-          badge="Limited Time"
+          badge="2-Day Workshop"
           title="Choose Your Batch"
-          subtitle="Pick the schedule that works best for you. All batches are $49 with the same curriculum and benefits."
+          subtitle="Both batches are $29 with the same content."
+          light
         />
 
-        {/* Price highlight */}
-        <div className="mb-6 text-center">
-          <div className="inline-flex items-baseline gap-2">
-            <span className="text-5xl font-extrabold">$49</span>
-            <span className="text-lg text-white/40 line-through">$199</span>
+        <div className="mb-10 text-center">
+          <div className="inline-flex items-baseline gap-3">
+            <span className="text-6xl font-black">$29</span>
+            <span className="text-xl text-white/25 line-through">$99</span>
           </div>
-          <p className="mt-1 text-sm text-white/50">One-time payment. Lifetime access.</p>
+          <p className="mt-2 text-sm text-white/30">One-time payment. Lifetime access to recordings.</p>
         </div>
 
-        {/* Timezone notice */}
         <div className="mb-10 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-4 py-2 text-sm text-amber-300">
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            All timings are in PST (Pacific Standard Time). Please adjust according to your timezone.
+          <span className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-5 py-2 text-sm text-amber-300">
+            🕐 All timings in PST — please adjust for your timezone
           </span>
         </div>
 
-        {/* Batch cards */}
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2">
           {batches.map((b) => (
             <div
               key={b.label}
-              className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur transition hover:border-primary/40 hover:bg-white/10"
+              className="group rounded-2xl border border-violet-500/20 bg-violet-500/5 p-8 transition hover:border-violet-500/50 hover:bg-violet-500/10"
             >
-              <p className="text-xs font-semibold uppercase tracking-widest text-primary-light">
-                {b.label}
-              </p>
-              <p className="mt-2 text-sm font-semibold text-amber-300">
-                {b.dates}
-              </p>
-              <div className="mt-3 flex items-center gap-3">
-                <svg className="h-5 w-5 shrink-0 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <span className="text-lg font-semibold">{b.days}</span>
+              <p className="text-xs font-bold uppercase tracking-widest text-violet-400">{b.label}</p>
+              <p className="mt-3 text-2xl font-black text-white">{b.dates}</p>
+              <div className="mt-4 space-y-2 text-sm text-white/50">
+                <p>📅 {b.days}</p>
+                <p>🕐 {b.time}</p>
               </div>
-              <div className="mt-2 flex items-center gap-3">
-                <svg className="h-5 w-5 shrink-0 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="text-lg font-semibold">{b.time}</span>
-              </div>
-
               <a
                 href={b.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 inline-block w-full rounded-xl bg-gradient-to-r from-primary to-accent py-3 text-center font-bold shadow-lg transition hover:scale-105"
+                className="mt-8 block w-full rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 py-3.5 text-center font-bold text-white shadow-[0_0_30px_rgba(124,58,237,0.3)] transition hover:scale-105 hover:shadow-[0_0_50px_rgba(124,58,237,0.4)]"
               >
-                Enroll — $49
+                Enroll — $29
               </a>
             </div>
           ))}
         </div>
 
-        {/* Features */}
-        <div className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-white/60">
-          {[
-            "4 weeks of structured content",
-            "Recorded video sessions",
-            "Hands-on exercises every week",
-            "GPU access included for labs",
-            "Discord community access",
-            "All future updates included",
-          ].map((item) => (
+        <div className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-white/30">
+          {["2-day intensive workshop", "Recorded video sessions", "Hands-on exercises", "All future updates included"].map((item) => (
             <span key={item} className="flex items-center gap-1.5">
-              <svg
-                className="h-4 w-4 text-green-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
+              <svg className="h-3.5 w-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
               {item}
@@ -645,8 +443,8 @@ function Pricing() {
           ))}
         </div>
 
-        <p className="mt-6 text-center text-xs text-white/40">
-          Instead of spending $1,000+ on bootcamps, get the same depth here.
+        <p className="mt-6 text-center text-xs text-white/20">
+          A weekend well spent. Build something real for $29.
         </p>
       </div>
     </section>
@@ -657,40 +455,22 @@ function Pricing() {
 
 function Bonuses() {
   const bonuses = [
-    {
-      icon: "🎥",
-      title: "Recorded Sessions",
-      desc: "Watch and rewatch at your own pace, forever.",
-    },
-    {
-      icon: "💬",
-      title: "Discord Community",
-      desc: "Connect with fellow learners and get your questions answered.",
-    },
-    {
-      icon: "🔄",
-      title: "Future Updates",
-      desc: "As AI evolves, so does this course — all updates free.",
-    },
+    { icon: "🎥", title: "Recorded Sessions", desc: "Watch and rewatch at your own pace, forever." },
+    { icon: "🔄", title: "Future Updates", desc: "As AI evolves, so does this workshop — all updates free." },
   ];
 
   return (
-    <section className="bg-white px-6 py-24 sm:px-12">
-      <div className="mx-auto max-w-5xl">
-        <SectionHeading
-          badge="Bonuses"
-          title="You Also Get"
-          subtitle="Extra value included with your enrollment."
-        />
-        <div className="grid gap-6 sm:grid-cols-3">
+    <section className="bg-[#0d1120] px-6 py-24 sm:px-12">
+      <div className="mx-auto max-w-4xl">
+        <SectionHeading badge="Bonuses" title="You Also Get" subtitle="Extra value included with your enrollment." light />
+        <div className="grid gap-5 sm:grid-cols-2">
           {bonuses.map((b) => (
-            <div
-              key={b.title}
-              className="rounded-2xl border border-primary/10 bg-primary/5 p-6 text-center"
-            >
-              <div className="mb-3 text-4xl">{b.icon}</div>
-              <h3 className="font-bold text-dark">{b.title}</h3>
-              <p className="mt-2 text-sm text-gray">{b.desc}</p>
+            <div key={b.title} className="flex gap-5 rounded-2xl border border-white/8 bg-white/3 p-7">
+              <div className="shrink-0 text-3xl">{b.icon}</div>
+              <div>
+                <h3 className="font-bold text-white">{b.title}</h3>
+                <p className="mt-1 text-sm text-white/40">{b.desc}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -704,23 +484,15 @@ function Bonuses() {
 const faqs = [
   {
     q: "Do I need prior AI or Machine Learning experience?",
-    a: "No. This course is designed for beginners. If you can write basic Python, you're ready.",
-  },
-  {
-    q: "Do I need a GPU?",
-    a: "We provide labs with GPU access for this course. To build an actual LLM, you will need a separate GPU, but we have you covered for the course exercises.",
+    a: "No. This workshop is designed for beginners. If you can write basic Python, you're ready.",
   },
   {
     q: "Will I actually build a real language model?",
-    a: "Yes! By Week 4, you will have built, trained, and evaluated your own small language model from scratch.",
+    a: "Yes! By the end of the workshop, you will have built, trained, and evaluated your own small language model from scratch.",
   },
   {
     q: "How is this different from free YouTube tutorials?",
-    a: "This is a structured, end-to-end program with hands-on exercises every week. No jumping between random videos hoping they connect.",
-  },
-  {
-    q: "What if I get stuck?",
-    a: "You'll have access to the Discord community where you can ask questions and get help from Prashant and fellow learners.",
+    a: "This is a structured, hands-on 2-day workshop. No jumping between random videos hoping they connect.",
   },
   {
     q: "Is there a refund policy?",
@@ -732,42 +504,27 @@ function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="bg-gray-light px-6 py-24 sm:px-12">
+    <section className="bg-[#080b14] px-6 py-24 sm:px-12">
       <div className="mx-auto max-w-3xl">
-        <SectionHeading
-          badge="FAQ"
-          title="Frequently Asked Questions"
-        />
+        <SectionHeading badge="FAQ" title="Frequently Asked Questions" light />
 
-        <div className="space-y-3">
+        <div className="space-y-2">
           {faqs.map((f, i) => (
-            <div
-              key={i}
-              className="rounded-2xl border border-white bg-white shadow-sm"
-            >
+            <div key={i} className="overflow-hidden rounded-xl border border-white/8 bg-white/3">
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 className="flex w-full items-center justify-between px-6 py-5 text-left"
               >
-                <span className="font-semibold text-dark">{f.q}</span>
+                <span className="font-semibold text-white text-sm">{f.q}</span>
                 <svg
-                  className={`h-5 w-5 shrink-0 text-gray transition-transform ${
-                    open === i ? "rotate-180" : ""
-                  }`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
+                  className={`h-4 w-4 shrink-0 text-white/30 transition-transform ${open === i ? "rotate-180" : ""}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 9l-7 7-7-7"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               {open === i && (
-                <div className="px-6 pb-5 text-gray">{f.a}</div>
+                <div className="border-t border-white/5 px-6 py-4 text-sm text-white/40 leading-relaxed">{f.a}</div>
               )}
             </div>
           ))}
@@ -781,20 +538,25 @@ function FAQ() {
 
 function FinalCTA() {
   return (
-    <section className="bg-gradient-to-r from-primary to-accent px-6 py-20 text-center text-white sm:px-12">
-      <div className="mx-auto max-w-2xl">
-        <h2 className="text-3xl font-extrabold sm:text-4xl">
-          Ready to Build Your Own Language Model?
+    <section className="relative overflow-hidden bg-[#0d1120] px-6 py-28 text-center text-white sm:px-12">
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <div className="h-[400px] w-[800px] rounded-full bg-gradient-to-r from-violet-600/20 to-blue-600/20 blur-[100px]" />
+      </div>
+      <div className="relative mx-auto max-w-2xl">
+        <h2 className="text-4xl font-black sm:text-5xl">
+          Ready to Build Your Own{" "}
+          <span className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent">
+            Language Model?
+          </span>
         </h2>
-        <p className="mt-4 text-lg text-white/80">
-          Join hundreds of engineers who decided to go from using AI to building
-          it. Your journey starts today.
+        <p className="mx-auto mt-5 max-w-lg text-base text-white/40 leading-relaxed">
+          Join engineers who decided to go from using AI to building it. Your journey starts this weekend.
         </p>
         <a
           href="#pricing"
-          className="mt-8 inline-block rounded-xl bg-white px-10 py-4 text-lg font-bold text-primary shadow-lg transition hover:scale-105"
+          className="mt-10 inline-block rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-12 py-4 text-lg font-bold text-white shadow-[0_0_60px_rgba(124,58,237,0.4)] transition hover:scale-105"
         >
-          Enroll Now for $49
+          Enroll Now for $29
         </a>
       </div>
     </section>
@@ -805,12 +567,9 @@ function FinalCTA() {
 
 function Footer() {
   return (
-    <footer className="bg-dark px-6 py-10 text-center text-sm text-white/40">
-      <p className="font-semibold text-white/60">IdeaWeaver AI Labs</p>
-      <p className="mt-1">
-        &copy; {new Date().getFullYear()} IdeaWeaver AI Labs. All rights
-        reserved.
-      </p>
+    <footer className="bg-[#080b14] border-t border-white/5 px-6 py-10 text-center text-sm text-white/20">
+      <p className="font-semibold text-white/40">IdeaWeaver AI Labs</p>
+      <p className="mt-1">&copy; {new Date().getFullYear()} IdeaWeaver AI Labs. All rights reserved.</p>
     </footer>
   );
 }
@@ -819,42 +578,14 @@ function Footer() {
 
 function StickyCTA() {
   return (
-    <div className="fixed right-0 bottom-0 left-0 z-50 border-t border-white/10 bg-dark/95 px-4 py-3 backdrop-blur sm:hidden">
+    <div className="fixed right-0 bottom-0 left-0 z-50 border-t border-white/10 bg-[#080b14]/95 px-4 py-3 backdrop-blur-xl sm:hidden">
       <a
         href="#pricing"
-        className="block w-full rounded-xl bg-gradient-to-r from-primary to-accent py-3 text-center font-bold text-white shadow-lg"
+        className="block w-full rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 py-3 text-center font-bold text-white"
       >
-        Enroll Now — $49
+        Enroll Now — $29
       </a>
     </div>
-  );
-}
-
-/* ───────── Nav ───────── */
-
-function Nav() {
-  return (
-    <nav className="fixed top-0 right-0 left-0 z-50 border-b border-white/10 bg-dark/90 px-6 py-4 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between">
-        <span className="text-lg font-bold text-white">
-          IdeaWeaver<span className="text-primary-light"> AI Labs</span>
-        </span>
-        <div className="hidden items-center gap-6 text-sm text-white/60 md:flex">
-          <a href="#curriculum" className="transition hover:text-white">
-            Curriculum
-          </a>
-          <a href="#pricing" className="transition hover:text-white">
-            Pricing
-          </a>
-          <a
-            href="#pricing"
-            className="rounded-lg bg-primary px-4 py-2 font-semibold text-white transition hover:bg-primary-dark"
-          >
-            Enroll Now
-          </a>
-        </div>
-      </div>
-    </nav>
   );
 }
 
@@ -867,7 +598,6 @@ export default function Home() {
       <Hero />
       <WhyThisCourse />
       <WhatYouLearn />
-      <Curriculum />
       <HandsOn />
       <WhoIsThisFor />
       <Instructor />

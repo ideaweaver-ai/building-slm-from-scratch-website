@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Build Your Own Language Model from Scratch | IdeaWeaver AI Labs",
   description:
-    "30-day hands-on program to build your own small language model from scratch. No prior AI experience required. Only $49.",
+    "2-day hands-on workshop to build your own small language model from scratch. No prior AI experience required. Only $29.",
 };
 
 export default function RootLayout({
@@ -13,8 +20,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-white text-dark antialiased">{children}</body>
+    <html lang="en" className={inter.variable}>
+      <body className="bg-[#09090b] font-sans text-white antialiased">
+        {children}
+      </body>
     </html>
   );
 }

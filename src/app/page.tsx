@@ -2,353 +2,447 @@
 
 import { useState } from "react";
 
-/* ───────── Shared Components ───────── */
+/* ─── Types ─── */
+type Course = {
+  title: string;
+  description: string;
+  price: string | number;
+  free?: boolean;
+  tag: string;
+  tagColor: string;
+  link: string;
+  featured?: boolean;
+  duration?: string;
+};
 
-function Badge({ children }: { children: React.ReactNode }) {
+/* ─── Data ─── */
+const courses: Course[] = [
+  {
+    title: "From Software & DevOps Engineer to Generative AI Engineer",
+    description:
+      "A 4-month, cohort-based program for Software and DevOps Engineers transitioning into Generative AI. Covers LangChain, RAG, fine-tuning, AI agents, model internals, and building small language models from scratch. Real GPU access included.",
+    price: 199,
+    tag: "4-Month Program",
+    tagColor: "from-violet-500 to-indigo-500",
+    link: "https://www.ideaweaver.ai/courses",
+    featured: true,
+    duration: "16 weeks",
+  },
+  {
+    title: "GenAI for DevOps Engineers – Morning Batch (PST)",
+    description:
+      "A one-month hands-on program for DevOps, Platform, and SRE engineers. Learn LangChain, Hugging Face, Ollama, vLLM, n8n, CrewAI, and RAG with applications in debugging, automation, code review, and Kubernetes troubleshooting.",
+    price: 39,
+    tag: "1-Month Cohort",
+    tagColor: "from-blue-500 to-cyan-500",
+    link: "https://www.ideaweaver.ai/courses",
+    duration: "4 weeks",
+  },
+  {
+    title: "GenAI for DevOps Engineers – Evening Batch (PST)",
+    description:
+      "Same curriculum as the morning batch — live instructor-led sessions three days a week. Hands-on labs, real-world operational use cases, and recordings included.",
+    price: 39,
+    tag: "1-Month Cohort",
+    tagColor: "from-blue-500 to-cyan-500",
+    link: "https://www.ideaweaver.ai/courses",
+    duration: "4 weeks",
+  },
+  {
+    title: "30 Days of AI Agents – Morning Batch",
+    description:
+      "Build and evaluate modern AI agents using n8n, CrewAI, LlamaIndex, LangGraph, and SmolAgents. Covers agent planning, tool use, multi-agent collaboration, and reliability evaluation.",
+    price: 39,
+    tag: "30-Day Cohort",
+    tagColor: "from-emerald-500 to-teal-500",
+    link: "https://www.ideaweaver.ai/courses",
+    duration: "4 weeks",
+  },
+  {
+    title: "30 Days of AI Agents – Evening Batch",
+    description:
+      "Same curriculum as the morning batch — live sessions focused on practical agent development. Build agents that plan, use tools, collaborate, and execute multi-step workflows.",
+    price: 39,
+    tag: "30-Day Cohort",
+    tagColor: "from-emerald-500 to-teal-500",
+    link: "https://www.ideaweaver.ai/courses",
+    duration: "4 weeks",
+  },
+  {
+    title: "Building Small Language Models from Scratch",
+    description:
+      "Hands-on deep dive into PyTorch, tokenizers, positional encoding, attention mechanisms, KV cache, and training your own language model. Real GPU access required and provided.",
+    price: 49,
+    tag: "30-Day Course",
+    tagColor: "from-orange-500 to-amber-500",
+    link: "https://www.ideaweaver.ai/courses",
+    duration: "4 weeks",
+  },
+  {
+    title: "100 Days of DevOps",
+    description:
+      "A comprehensive DevOps program covering Linux, scripting, CI/CD, containers, Kubernetes, cloud infrastructure, and monitoring. Designed for engineers who want a strong operational foundation.",
+    price: 0,
+    free: true,
+    tag: "Free Course",
+    tagColor: "from-zinc-500 to-zinc-600",
+    link: "https://www.ideaweaver.ai/courses",
+  },
+];
+
+const features = [
+  {
+    icon: "🏗️",
+    title: "Learn by Building",
+    desc: "Weekly live classes and hands-on exercises focused on real-world Generative AI systems — not slides, not theory dumps.",
+  },
+  {
+    icon: "⚡",
+    title: "Real GPU Access",
+    desc: "Train, fine-tune, build, and evaluate models using real GPU resources — not simulated environments or toy datasets.",
+  },
+  {
+    icon: "🧠",
+    title: "From Basics to Models",
+    desc: "Start from first principles and progress all the way to building and understanding small language models from scratch.",
+  },
+  {
+    icon: "👥",
+    title: "Cohort-Based Learning",
+    desc: "Learn alongside other engineers at the same stage. Live sessions, shared exercises, and a community that moves together.",
+  },
+];
+
+/* ─── Shared Components ─── */
+
+function GradientButton({
+  href,
+  children,
+  size = "md",
+  variant = "primary",
+  external,
+}: {
+  href: string;
+  children: React.ReactNode;
+  size?: "sm" | "md" | "lg";
+  variant?: "primary" | "outline";
+  external?: boolean;
+}) {
+  const base =
+    "shimmer-hover inline-block rounded-xl font-semibold transition-all";
+  const sizes = { sm: "px-5 py-2.5 text-sm", md: "px-7 py-3 text-sm", lg: "px-10 py-4 text-base" };
+  const variants = {
+    primary:
+      "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-[0_0_30px_rgba(124,58,237,0.35)] hover:scale-[1.03] hover:shadow-[0_0_50px_rgba(124,58,237,0.5)]",
+    outline:
+      "border border-white/[0.12] text-zinc-300 hover:border-violet-500/50 hover:text-white",
+  };
   return (
-    <span className="inline-block rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold text-violet-300 tracking-wide">
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      className={`${base} ${sizes[size]} ${variants[variant]}`}
+    >
       {children}
-    </span>
+    </a>
   );
 }
 
-function SectionHeading({
-  badge,
-  title,
-  subtitle,
-  light,
-}: {
-  badge?: string;
-  title: string;
-  subtitle?: string;
-  light?: boolean;
-}) {
+/* ─── Announcement Bar ─── */
+function AnnouncementBar() {
   return (
-    <div className="mx-auto mb-12 max-w-2xl text-center">
-      {badge && <Badge>{badge}</Badge>}
-      <h2 className={`mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl ${light ? "text-white" : "text-white"}`}>
-        {title}
-      </h2>
-      {subtitle && <p className="mt-4 text-base text-white/50">{subtitle}</p>}
+    <div className="relative bg-gradient-to-r from-violet-600/20 via-indigo-600/20 to-violet-600/20 border-b border-violet-500/20 px-4 py-2.5 text-center text-sm font-medium text-zinc-300">
+      <div className="pointer-events-none absolute inset-0 bg-[#09090b]/60" />
+      <span className="relative">
+        🚀{" "}
+        <span className="font-semibold text-white">New Cohort Starts April 3, 2026</span>
+        {" "}— Limited Seats Available.{" "}
+        <a href="#courses" className="text-violet-300 underline decoration-violet-500/40 hover:text-violet-200">
+          Enroll Now →
+        </a>
+      </span>
     </div>
   );
 }
 
-/* ───────── Nav ───────── */
-
+/* ─── Nav ─── */
 function Nav() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
-    <nav className="fixed top-0 right-0 left-0 z-50 border-b border-white/5 bg-[#080b14]/90 px-6 py-4 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-6xl items-center justify-between">
-        <span className="text-lg font-bold text-white">
-          IdeaWeaver<span className="text-violet-400"> AI Labs</span>
-        </span>
-        <div className="hidden items-center gap-6 text-sm md:flex">
-          <a href="#pricing" className="text-white/50 transition hover:text-white">
-            Pricing
-          </a>
-          <a
-            href="#pricing"
-            className="rounded-lg bg-violet-600 px-4 py-2 font-semibold text-white transition hover:bg-violet-500"
-          >
-            Enroll Now
-          </a>
+    <nav className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#09090b]/95 px-6 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between">
+        {/* Logo */}
+        <a href="/" className="flex items-center gap-2.5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 text-xs font-black text-white">
+            IW
+          </span>
+          <span className="text-base font-bold text-white">
+            IdeaWeaver <span className="text-violet-400">AI Labs</span>
+          </span>
+        </a>
+
+        {/* Desktop nav */}
+        <div className="hidden items-center gap-8 text-sm md:flex">
+          <a href="#courses" className="text-zinc-400 transition hover:text-white">Courses</a>
+          <a href="#about" className="text-zinc-400 transition hover:text-white">About</a>
+          <a href="#instructor" className="text-zinc-400 transition hover:text-white">Instructor</a>
+          <a href="#faq" className="text-zinc-400 transition hover:text-white">FAQ</a>
         </div>
+
+        {/* Desktop CTA */}
+        <div className="hidden items-center gap-3 md:flex">
+          <a href="https://www.ideaweaver.ai/sign_in" target="_blank" rel="noopener noreferrer"
+            className="text-sm text-zinc-400 transition hover:text-white">
+            Log in
+          </a>
+          <GradientButton href="#courses" size="sm">Enroll Now</GradientButton>
+        </div>
+
+        {/* Mobile hamburger */}
+        <button
+          className="flex flex-col gap-1.5 md:hidden"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+        >
+          <span className={`block h-0.5 w-6 bg-zinc-400 transition-transform ${mobileOpen ? "translate-y-2 rotate-45" : ""}`} />
+          <span className={`block h-0.5 w-6 bg-zinc-400 transition-opacity ${mobileOpen ? "opacity-0" : ""}`} />
+          <span className={`block h-0.5 w-6 bg-zinc-400 transition-transform ${mobileOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+        </button>
       </div>
+
+      {mobileOpen && (
+        <div className="flex flex-col gap-4 border-t border-white/[0.06] py-5 md:hidden">
+          {[["#courses", "Courses"], ["#about", "About"], ["#instructor", "Instructor"], ["#faq", "FAQ"]].map(([href, label]) => (
+            <a key={href} href={href} onClick={() => setMobileOpen(false)}
+              className="text-sm text-zinc-400 transition hover:text-white">
+              {label}
+            </a>
+          ))}
+          <GradientButton href="#courses" size="sm">Enroll Now</GradientButton>
+        </div>
+      )}
     </nav>
   );
 }
 
-/* ───────── Hero ───────── */
-
+/* ─── Hero ─── */
 function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#080b14] px-6 pt-40 pb-28 text-white sm:px-12">
+    <section className="relative overflow-hidden bg-[#09090b] px-6 py-28 sm:px-12 sm:py-36">
       {/* Grid pattern */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage:
-            "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+          backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
-      {/* Glow blobs */}
-      <div className="pointer-events-none absolute top-0 left-1/4 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/20 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-0 right-1/4 h-[400px] w-[400px] translate-x-1/2 translate-y-1/2 rounded-full bg-blue-600/15 blur-[100px]" />
+      {/* Glow */}
+      <div className="pointer-events-none absolute top-1/2 left-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/15 blur-[140px]" />
 
       <div className="relative mx-auto max-w-4xl text-center">
-        <Badge>2-Day Workshop &mdash; April 24&ndash;26, 2026</Badge>
+        {/* Eyebrow */}
+        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold text-violet-300">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          Built for Software & DevOps Engineers
+        </div>
 
-        <h1 className="mt-8 text-5xl font-black leading-[1.1] tracking-tight sm:text-7xl">
-          Stop Using AI.{" "}
-          <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-blue-400 bg-clip-text text-transparent">
-            Start Building It.
+        <h1 className="text-5xl font-black leading-[1.1] tracking-tight text-white sm:text-6xl lg:text-7xl">
+          From{" "}
+          <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-indigo-400 bg-clip-text text-transparent">
+            Engineer
+          </span>{" "}
+          to{" "}
+          <span className="bg-gradient-to-r from-indigo-400 to-blue-400 bg-clip-text text-transparent">
+            AI Builder
           </span>
         </h1>
 
-        <p className="mx-auto mt-8 max-w-2xl text-lg text-white/50 sm:text-xl leading-relaxed">
-          In just 2&nbsp;days, build your own Small Language Model based on the{" "}
-          <span className="text-violet-300 font-semibold">Gemma&nbsp;4 architecture</span>
-          {" "}— from scratch, hands-on.
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-zinc-400 leading-relaxed sm:text-xl">
+          Hands-on, cohort-based Generative AI programs for Software and DevOps Engineers — focused on building real-world AI systems, not hello-world demos.
         </p>
 
-        <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <a
-            href="#pricing"
-            className="rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-10 py-4 text-lg font-bold text-white shadow-[0_0_40px_rgba(124,58,237,0.4)] transition hover:scale-105 hover:shadow-[0_0_60px_rgba(124,58,237,0.5)]"
-          >
-            Enroll Now for $29
-          </a>
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <GradientButton href="#courses" size="lg">Browse Courses</GradientButton>
+          <GradientButton href="#about" size="lg" variant="outline">How It Works</GradientButton>
         </div>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-4 text-sm">
-          {["Beginner Friendly", "100% Hands-On"].map((t) => (
-            <span
-              key={t}
-              className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-white/60 backdrop-blur"
-            >
-              <svg className="h-3.5 w-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+        {/* Trust badges */}
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-4 text-sm text-zinc-500">
+          {[
+            "Real GPU Access",
+            "Live Instructor-Led",
+            "Cohort-Based",
+            "Engineers Teaching Engineers",
+          ].map((t) => (
+            <span key={t} className="flex items-center gap-2">
+              <svg className="h-3.5 w-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
               {t}
             </span>
           ))}
         </div>
-
-        {/* Date countdown strip */}
-        <div className="mt-16 grid grid-cols-2 divide-x divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur sm:grid-cols-2 max-w-lg mx-auto">
-          <div className="px-8 py-5">
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/40">Morning Batch</p>
-            <p className="mt-1 text-base font-bold text-white">Sat–Sun, Apr 25–26</p>
-            <p className="text-sm text-violet-300">8:00–10:00 AM PST</p>
-          </div>
-          <div className="px-8 py-5">
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/40">Evening Batch</p>
-            <p className="mt-1 text-base font-bold text-white">Fri–Sat, Apr 24–25</p>
-            <p className="text-sm text-violet-300">7:00–9:00 PM PST</p>
-          </div>
-        </div>
       </div>
     </section>
   );
 }
 
-/* ───────── Why This Workshop ───────── */
-
-function WhyThisCourse() {
+/* ─── Courses ─── */
+function CourseCard({ course }: { course: Course }) {
   return (
-    <section className="bg-[#0d1120] px-6 py-24 sm:px-12">
-      <div className="mx-auto max-w-5xl">
-        <SectionHeading
-          badge="The Problem"
-          title="Everyone Uses AI. Almost No One Understands It."
-          subtitle="Most people interact with ChatGPT daily but have zero idea how it actually works under the hood."
-          light
-        />
-
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-8">
-            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-red-500/10 text-xl">⚠️</div>
-            <h3 className="text-lg font-bold text-white">Without This Workshop</h3>
-            <ul className="mt-4 space-y-3 text-sm text-white/50">
-              {[
-                "You copy-paste prompts without understanding",
-                "AI feels like magic — you can't debug or improve it",
-                "You rely on expensive APIs with no alternative",
-              ].map((item) => (
-                <li key={item} className="flex gap-2.5">
-                  <span className="mt-0.5 shrink-0 text-red-400">✗</span> {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-8">
-            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/10 text-xl">✨</div>
-            <h3 className="text-lg font-bold text-white">With This Workshop</h3>
-            <ul className="mt-4 space-y-3 text-sm text-white/50">
-              {[
-                "You understand how LLMs actually work",
-                "You can build, train, and evaluate your own model",
-                "You stand out as an engineer who truly gets AI",
-              ].map((item) => (
-                <li key={item} className="flex gap-2.5">
-                  <span className="mt-0.5 shrink-0 text-emerald-400">✓</span> {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+    <div className={`group relative flex flex-col overflow-hidden rounded-2xl border transition ${
+      course.featured
+        ? "border-violet-500/40 bg-violet-500/[0.04] hover:border-violet-500/70"
+        : "border-white/[0.06] bg-[#111116] hover:border-violet-500/30"
+    }`}>
+      {course.featured && (
+        <div className="absolute right-4 top-4 rounded-full bg-violet-600 px-3 py-0.5 text-xs font-bold uppercase tracking-wider text-white">
+          Most Popular
         </div>
-      </div>
-    </section>
-  );
-}
+      )}
 
-/* ───────── What You Will Learn ───────── */
+      {/* Colored top bar */}
+      <div className={`h-1 w-full bg-gradient-to-r ${course.tagColor}`} />
 
-const learnings = [
-  { icon: "🔤", title: "Tokenization", desc: "How raw text becomes numerical tokens that models understand." },
-  { icon: "📐", title: "Positional Encoding", desc: "Why order matters and how transformers keep track of it." },
-  { icon: "🎯", title: "Attention Mechanism", desc: "The breakthrough idea behind every modern LLM, explained clearly." },
-  { icon: "⚡", title: "KV Cache & Optimization", desc: "How inference is made fast and efficient in production." },
-  { icon: "🧠", title: "Build Your Own LLM", desc: "Combine everything to train a working language model end to end." },
-];
-
-function WhatYouLearn() {
-  return (
-    <section className="bg-[#080b14] px-6 py-24 sm:px-12">
-      <div className="mx-auto max-w-5xl">
-        <SectionHeading
-          badge="Workshop Topics"
-          title="What You Will Build & Learn"
-          subtitle="A practical, no-fluff curriculum designed for builders."
-          light
-        />
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {learnings.map((l, i) => (
-            <div
-              key={l.title}
-              className="group relative overflow-hidden rounded-2xl border border-white/8 bg-white/3 p-6 transition hover:border-violet-500/40 hover:bg-violet-500/5"
-            >
-              <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100"
-                style={{ background: "radial-gradient(circle at 50% 0%, rgba(124,58,237,0.08) 0%, transparent 70%)" }}
-              />
-              <div className="mb-4 text-3xl">{l.icon}</div>
-              <div className="mb-1 text-xs font-semibold uppercase tracking-widest text-violet-400">
-                Step {i + 1}
-              </div>
-              <h3 className="text-base font-bold text-white">{l.title}</h3>
-              <p className="mt-2 text-sm text-white/40 leading-relaxed">{l.desc}</p>
-            </div>
-          ))}
+      <div className="flex flex-1 flex-col p-7">
+        {/* Tag + duration */}
+        <div className="mb-4 flex items-center gap-2 flex-wrap">
+          <span className={`inline-flex items-center rounded-full bg-gradient-to-r ${course.tagColor} px-3 py-0.5 text-xs font-semibold text-white`}>
+            {course.tag}
+          </span>
+          {course.duration && (
+            <span className="text-xs text-zinc-500">· {course.duration}</span>
+          )}
         </div>
-      </div>
-    </section>
-  );
-}
 
-/* ───────── Hands-On Focus ───────── */
+        <h3 className="text-base font-bold text-white leading-snug">{course.title}</h3>
+        <p className="mt-3 flex-1 text-sm text-zinc-400 leading-relaxed">{course.description}</p>
 
-function HandsOn() {
-  const points = [
-    { title: "No Boring Theory", desc: "Concepts are taught through code, not endless equations.", icon: "💡" },
-    { title: "Step-by-Step", desc: "Each exercise builds on the last so you never feel overwhelmed.", icon: "🪜" },
-  ];
-
-  return (
-    <section className="bg-[#0d1120] px-6 py-24 sm:px-12">
-      <div className="mx-auto max-w-5xl">
-        <SectionHeading badge="Learn by Doing" title="100% Hands-On. Zero Fluff." light />
-        <div className="grid gap-6 sm:grid-cols-2">
-          {points.map((p) => (
-            <div key={p.title} className="flex gap-5 rounded-2xl border border-white/8 bg-white/3 p-8">
-              <div className="shrink-0 text-4xl">{p.icon}</div>
-              <div>
-                <h3 className="text-lg font-bold text-white">{p.title}</h3>
-                <p className="mt-2 text-sm text-white/40 leading-relaxed">{p.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ───────── Who Is This For ───────── */
-
-function WhoIsThisFor() {
-  const personas = [
-    { icon: "🛠", title: "DevOps Engineers", desc: "Moving to AI and want a solid foundation in how LLMs work." },
-    { icon: "💻", title: "Software Engineers", desc: "Curious about LLMs and want to go beyond just calling APIs." },
-    { icon: "🌱", title: "Beginners", desc: "New to AI but want practical, hands-on skills — not just theory." },
-    { icon: "📢", title: "Content Creators & Educators", desc: "Want a deeper understanding to create better AI content." },
-  ];
-
-  return (
-    <section className="bg-[#080b14] px-6 py-24 sm:px-12">
-      <div className="mx-auto max-w-5xl">
-        <SectionHeading badge="Is This You?" title="Who Is This Workshop For?" light />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {personas.map((p) => (
-            <div
-              key={p.title}
-              className="rounded-2xl border border-white/8 bg-white/3 p-6 text-center transition hover:border-violet-500/30 hover:bg-violet-500/5"
-            >
-              <div className="mb-4 text-4xl">{p.icon}</div>
-              <h3 className="font-bold text-white text-sm">{p.title}</h3>
-              <p className="mt-2 text-xs text-white/40 leading-relaxed">{p.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ───────── Instructor ───────── */
-
-const modelsBuilt = [
-  { name: "Gemma 3", url: "https://huggingface.co/lakhera2023/gemma3-from-scratch/tree/main" },
-  { name: "DeepSeek", url: "https://huggingface.co/lakhera2023/deepseek-children-stories" },
-  { name: "Qwen", url: "https://huggingface.co/lakhera2023/Qwen-model" },
-  { name: "DevOps SLM", url: "https://huggingface.co/lakhera2023/devops-slm" },
-  { name: "LLaMA 4", url: "https://huggingface.co/lakhera2023/llama4-debugmodel-10k" },
-];
-
-function Instructor() {
-  return (
-    <section className="bg-[#0d1120] px-6 py-24 sm:px-12">
-      <div className="mx-auto max-w-4xl">
-        <SectionHeading badge="Your Instructor" title="Meet Prashant Lakhera" light />
-
-        <div className="flex flex-col items-center gap-10 rounded-2xl border border-white/8 bg-white/3 p-10 md:flex-row">
-          <div className="flex h-36 w-36 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-blue-600 text-5xl font-black text-white shadow-[0_0_60px_rgba(124,58,237,0.4)]">
-            PL
-          </div>
-
+        {/* Footer */}
+        <div className="mt-6 flex items-center justify-between border-t border-white/[0.06] pt-5">
           <div>
-            <h3 className="text-2xl font-bold text-white">Prashant Lakhera</h3>
-            <p className="mt-1 text-sm font-semibold text-violet-400">Founder, IdeaWeaver AI Labs</p>
-            <p className="mt-4 text-sm text-white/50 leading-relaxed">
-              DevOps expert and author of{" "}
-              <a
-                href="https://plakhera.gumroad.com/l/BuildingASmallLanguageModelfromScratch"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-violet-300 underline decoration-violet-500/40 hover:decoration-violet-300"
-              >
-                &ldquo;Building a Small Language Model from Scratch&rdquo;
-              </a>
-              . Prashant has built several language models himself — all publicly available on Hugging Face. He specializes in breaking down complex topics into digestible, actionable lessons.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {["Published Author", "YouTube Educator", "Community Builder", "DevOps → AI"].map((tag) => (
-                <span key={tag} className="rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-300">
-                  {tag}
-                </span>
-              ))}
-            </div>
+            {course.free ? (
+              <span className="text-xl font-black text-emerald-400">Free</span>
+            ) : (
+              <div className="flex items-baseline gap-1">
+                <span className="text-2xl font-black text-white">${course.price}</span>
+                <span className="text-xs text-zinc-500">/cohort</span>
+              </div>
+            )}
           </div>
+          <a
+            href={course.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shimmer-hover inline-block rounded-lg bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_0_20px_rgba(124,58,237,0.3)] transition hover:scale-105 hover:shadow-[0_0_35px_rgba(124,58,237,0.45)]"
+          >
+            Enroll →
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CoursesSection() {
+  const [filter, setFilter] = useState("All");
+  const filters = ["All", "4-Month Program", "1-Month Cohort", "30-Day Cohort", "30-Day Course", "Free Course"];
+
+  const filtered = filter === "All" ? courses : courses.filter((c) => c.tag === filter);
+
+  return (
+    <section id="courses" className="bg-[#09090b] px-6 py-24 sm:px-12">
+      <div className="mx-auto max-w-7xl">
+        {/* Header */}
+        <div className="mb-4 flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 w-fit text-sm font-semibold text-violet-300">
+          Programs & Courses
+        </div>
+        <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+              Learn Generative AI by Building Real Systems
+            </h2>
+            <p className="mt-3 max-w-xl text-zinc-400 text-base leading-relaxed">
+              Every program is cohort-based, hands-on, and designed for engineers who want to go beyond tools and understand how AI systems actually work.
+            </p>
+          </div>
+          <a href="https://www.ideaweaver.ai/courses" target="_blank" rel="noopener noreferrer"
+            className="shrink-0 text-sm text-violet-400 underline decoration-violet-500/40 transition hover:text-violet-300">
+            View all products →
+          </a>
         </div>
 
-        <div className="mt-8">
-          <p className="mb-4 text-center text-xs font-semibold uppercase tracking-widest text-white/30">
-            Models Built by Prashant (on Hugging Face)
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {modelsBuilt.map((m) => (
-              <a
-                key={m.name}
-                href={m.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-xl border border-white/8 bg-white/3 px-4 py-2 text-sm font-semibold text-white/60 transition hover:border-violet-500/30 hover:text-violet-300"
-              >
-                {m.name}
-              </a>
+        {/* Filters */}
+        <div className="mb-8 flex flex-wrap gap-2">
+          {filters.map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
+                filter === f
+                  ? "bg-violet-600 text-white"
+                  : "border border-white/[0.08] text-zinc-400 hover:border-violet-500/40 hover:text-zinc-200"
+              }`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+
+        {/* Grid */}
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((c) => (
+            <CourseCard key={c.title} course={c} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── About ─── */
+function AboutSection() {
+  return (
+    <section id="about" className="bg-[#111116] px-6 py-24 sm:px-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
+          {/* Left */}
+          <div>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold text-violet-300">
+              Our Approach
+            </div>
+            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+              Most AI courses focus on tools and prompts.{" "}
+              <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
+                We focus on systems.
+              </span>
+            </h2>
+            <p className="mt-5 text-zinc-400 leading-relaxed">
+              IdeaWeaver AI Labs is a hands-on learning platform built for Software Engineers and DevOps Engineers who want to transition into Generative AI by understanding how real systems work.
+            </p>
+            <p className="mt-4 text-zinc-400 leading-relaxed">
+              Here, you learn how Generative AI actually works — how models are trained, evaluated, and used in real-world systems. We start from first principles and don&rsquo;t assume prior GenAI or ML knowledge. A working knowledge of Python is the only prerequisite.
+            </p>
+            <p className="mt-4 text-zinc-400 leading-relaxed">
+              You&rsquo;ll work on real-world patterns and get hands-on access to real GPU resources. Built by engineers, for engineers.
+            </p>
+            <div className="mt-8">
+              <GradientButton href="#courses" size="md">Explore Programs</GradientButton>
+            </div>
+          </div>
+
+          {/* Right — feature cards */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {features.map((f) => (
+              <div key={f.title}
+                className="rounded-2xl border border-white/[0.06] bg-[#09090b] p-6 transition hover:border-violet-500/30">
+                <div className="mb-3 text-3xl">{f.icon}</div>
+                <h3 className="font-bold text-white text-sm">{f.title}</h3>
+                <p className="mt-2 text-xs text-zinc-400 leading-relaxed">{f.desc}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -357,146 +451,142 @@ function Instructor() {
   );
 }
 
-/* ───────── Pricing ───────── */
-
-const batches = [
-  {
-    label: "Workshop — Morning Batch",
-    days: "Saturday – Sunday",
-    time: "8:00 – 10:00 AM PST",
-    dates: "Apr 25 – Apr 26",
-    link: "https://www.ideaweaver.ai/purchase?product_id=6706367",
-  },
-  {
-    label: "Workshop — Evening Batch",
-    days: "Friday – Saturday",
-    time: "7:00 – 9:00 PM PST",
-    dates: "Apr 24 – Apr 25",
-    link: "https://www.ideaweaver.ai/purchase?product_id=6706370",
-  },
-];
-
-function Pricing() {
-  return (
-    <section
-      id="pricing"
-      className="relative bg-[#080b14] px-6 py-24 text-white sm:px-12"
-    >
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="h-[500px] w-[500px] rounded-full bg-violet-600/10 blur-[120px]" />
-      </div>
-
-      <div className="relative mx-auto max-w-4xl">
-        <SectionHeading
-          badge="2-Day Workshop"
-          title="Choose Your Batch"
-          subtitle="Both batches are $29 with the same content."
-          light
-        />
-
-        <div className="mb-10 text-center">
-          <div className="inline-flex items-baseline gap-3">
-            <span className="text-6xl font-black">$29</span>
-            <span className="text-xl text-white/25 line-through">$99</span>
-          </div>
-          <p className="mt-2 text-sm text-white/30">One-time payment. Lifetime access to recordings.</p>
-        </div>
-
-        <div className="mb-10 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-5 py-2 text-sm text-amber-300">
-            🕐 All timings in PST — please adjust for your timezone
-          </span>
-        </div>
-
-        <div className="grid gap-5 sm:grid-cols-2">
-          {batches.map((b) => (
-            <div
-              key={b.label}
-              className="group rounded-2xl border border-violet-500/20 bg-violet-500/5 p-8 transition hover:border-violet-500/50 hover:bg-violet-500/10"
-            >
-              <p className="text-xs font-bold uppercase tracking-widest text-violet-400">{b.label}</p>
-              <p className="mt-3 text-2xl font-black text-white">{b.dates}</p>
-              <div className="mt-4 space-y-2 text-sm text-white/50">
-                <p>📅 {b.days}</p>
-                <p>🕐 {b.time}</p>
-              </div>
-              <a
-                href={b.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 block w-full rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 py-3.5 text-center font-bold text-white shadow-[0_0_30px_rgba(124,58,237,0.3)] transition hover:scale-105 hover:shadow-[0_0_50px_rgba(124,58,237,0.4)]"
-              >
-                Enroll — $29
-              </a>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-white/30">
-          {["2-day intensive workshop", "Recorded video sessions", "Hands-on exercises", "All future updates included"].map((item) => (
-            <span key={item} className="flex items-center gap-1.5">
-              <svg className="h-3.5 w-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              {item}
-            </span>
-          ))}
-        </div>
-
-        <p className="mt-6 text-center text-xs text-white/20">
-          A weekend well spent. Build something real for $29.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-/* ───────── Bonuses ───────── */
-
-function Bonuses() {
-  const bonuses = [
-    { icon: "🎥", title: "Recorded Sessions", desc: "Watch and rewatch at your own pace, forever." },
-    { icon: "🔄", title: "Future Updates", desc: "As AI evolves, so does this workshop — all updates free." },
+/* ─── What You'll Work On ─── */
+function CurriculumHighlights() {
+  const topics = [
+    "LangChain & Prompt Engineering",
+    "Hugging Face & Model Hubs",
+    "Retrieval-Augmented Generation (RAG)",
+    "Fine-Tuning & Model Evaluation",
+    "AI Agents (CrewAI, LangGraph, n8n)",
+    "Ollama & vLLM (Local Inference)",
+    "Tokenization & Positional Encoding",
+    "Attention Mechanisms & KV Cache",
+    "Building Small Language Models",
+    "PyTorch & Neural Networks",
+    "MCP & Quantization",
+    "Kubernetes + GenAI Workflows",
   ];
 
   return (
-    <section className="bg-[#0d1120] px-6 py-24 sm:px-12">
-      <div className="mx-auto max-w-4xl">
-        <SectionHeading badge="Bonuses" title="You Also Get" subtitle="Extra value included with your enrollment." light />
-        <div className="grid gap-5 sm:grid-cols-2">
-          {bonuses.map((b) => (
-            <div key={b.title} className="flex gap-5 rounded-2xl border border-white/8 bg-white/3 p-7">
-              <div className="shrink-0 text-3xl">{b.icon}</div>
-              <div>
-                <h3 className="font-bold text-white">{b.title}</h3>
-                <p className="mt-1 text-sm text-white/40">{b.desc}</p>
+    <section className="bg-[#09090b] px-6 py-24 sm:px-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
+          {/* Topics grid */}
+          <div className="grid grid-cols-2 gap-3">
+            {topics.map((t) => (
+              <div key={t}
+                className="flex items-start gap-2.5 rounded-xl border border-white/[0.06] bg-[#111116] px-4 py-3">
+                <svg className="mt-0.5 h-4 w-4 shrink-0 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
+                </svg>
+                <span className="text-xs font-medium text-zinc-300 leading-tight">{t}</span>
               </div>
+            ))}
+          </div>
+
+          {/* Text */}
+          <div>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold text-violet-300">
+              What You&rsquo;ll Work On
             </div>
-          ))}
+            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+              A complete path from engineer to AI builder
+            </h2>
+            <p className="mt-5 text-zinc-400 leading-relaxed">
+              Our programs are cohort-based and focused on learning by building. Instead of relying on prompt-only workflows, students work on practical exercises and mini-projects that reflect how Generative AI systems are designed, trained, evaluated, and deployed in real-world environments.
+            </p>
+            <p className="mt-4 text-zinc-400 leading-relaxed">
+              All programs emphasize practical implementation, clear mental models, and engineering depth. Students also get access to real GPU resources for hands-on experimentation and model training.
+            </p>
+            <div className="mt-8">
+              <GradientButton href="#courses" size="md">See All Programs</GradientButton>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-/* ───────── FAQ ───────── */
+/* ─── Instructor ─── */
+function InstructorSection() {
+  return (
+    <section id="instructor" className="bg-[#111116] px-6 py-24 sm:px-12">
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold text-violet-300">
+          Your Instructor
+        </div>
+        <h2 className="mb-12 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+          Hi, I&rsquo;m Prashant
+        </h2>
 
+        <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[#09090b]">
+          <div className="flex flex-col gap-10 p-10 md:flex-row md:items-start">
+            {/* Avatar */}
+            <div className="flex h-32 w-32 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-indigo-600 text-4xl font-black text-white ring-2 ring-violet-500/30 ring-offset-4 ring-offset-[#09090b] shadow-[0_0_50px_rgba(124,58,237,0.35)]">
+              PL
+            </div>
+
+            {/* Bio */}
+            <div>
+              <h3 className="text-2xl font-bold text-white">Prashant Lakhera</h3>
+              <p className="mt-1 text-sm font-semibold text-violet-400">Founder, IdeaWeaver AI Labs</p>
+
+              <p className="mt-5 text-sm text-zinc-400 leading-relaxed">
+                With 20+ years of experience across Software Engineering, DevOps, Cloud, Kubernetes, and Large-Scale Distributed Systems. Over the years, I&rsquo;ve worked on systems used by millions of users, built and operated production-grade cloud platforms, and helped teams debug, scale, and secure complex infrastructure.
+              </p>
+              <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
+                More recently, my focus has been on Generative AI — specifically how LLMs actually work under the hood and how to build reliable, real-world GenAI systems. I&rsquo;m the author of multiple technical books, a CNCF Kubestronaut, RHCA, and an AWS Community Builder.
+              </p>
+              <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
+                I created IdeaWeaver AI Labs to help engineers transition into Generative AI the right way — by building systems, understanding fundamentals, and learning through hands-on work, not hype.
+              </p>
+
+              {/* Credentials */}
+              <div className="mt-6 flex flex-wrap gap-2">
+                {[
+                  "CNCF Kubestronaut",
+                  "RHCA",
+                  "AWS Community Builder",
+                  "Published Author",
+                  "20+ Years Engineering",
+                ].map((tag) => (
+                  <span key={tag}
+                    className="rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-300">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── FAQ ─── */
 const faqs = [
   {
-    q: "Do I need prior AI or Machine Learning experience?",
-    a: "No. This workshop is designed for beginners. If you can write basic Python, you're ready.",
+    q: "Do I need prior AI or ML experience?",
+    a: "No. We start from first principles. A working knowledge of Python is the only prerequisite. All programs are designed for Software and DevOps Engineers making the transition.",
   },
   {
-    q: "Will I actually build a real language model?",
-    a: "Yes! By the end of the workshop, you will have built, trained, and evaluated your own small language model from scratch.",
+    q: "What does 'cohort-based' mean?",
+    a: "You learn alongside a group of engineers at the same stage. Sessions are live and instructor-led, typically running 3 days a week. Recordings are available for enrolled students.",
   },
   {
-    q: "How is this different from free YouTube tutorials?",
-    a: "This is a structured, hands-on 2-day workshop. No jumping between random videos hoping they connect.",
+    q: "Do I get real GPU access?",
+    a: "Yes. All programs that require GPU compute — fine-tuning, model training, and evaluation — include access to real GPU resources, not simulated environments.",
   },
   {
-    q: "Is there a refund policy?",
-    a: "At this point of time, we are not providing any refunds.",
+    q: "What is the difference between the 1-month and 4-month programs?",
+    a: "The 1-month programs (GenAI for DevOps, AI Agents, SLM) focus on a single domain. The 4-month program is a full-stack GenAI curriculum covering everything from LangChain and RAG to model internals and building small language models from scratch.",
+  },
+  {
+    q: "Are there refunds?",
+    a: "At this time we do not offer refunds. If you have questions about a program before enrolling, reach out directly.",
   },
 ];
 
@@ -504,28 +594,33 @@ function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="bg-[#080b14] px-6 py-24 sm:px-12">
+    <section id="faq" className="bg-[#09090b] px-6 py-24 sm:px-12">
       <div className="mx-auto max-w-3xl">
-        <SectionHeading badge="FAQ" title="Frequently Asked Questions" light />
-
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold text-violet-300">
+          FAQ
+        </div>
+        <h2 className="mb-12 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+          Frequently Asked Questions
+        </h2>
         <div className="space-y-2">
           {faqs.map((f, i) => (
-            <div key={i} className="overflow-hidden rounded-xl border border-white/8 bg-white/3">
+            <div key={i}
+              className="overflow-hidden rounded-xl border border-white/[0.06] bg-[#111116] transition hover:border-violet-500/20">
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 className="flex w-full items-center justify-between px-6 py-5 text-left"
               >
-                <span className="font-semibold text-white text-sm">{f.q}</span>
+                <span className="pr-4 font-semibold text-white text-sm">{f.q}</span>
                 <svg
-                  className={`h-4 w-4 shrink-0 text-white/30 transition-transform ${open === i ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 shrink-0 text-zinc-500 transition-transform duration-300 ${open === i ? "rotate-180" : ""}`}
                   fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {open === i && (
-                <div className="border-t border-white/5 px-6 py-4 text-sm text-white/40 leading-relaxed">{f.a}</div>
-              )}
+              <div className={`faq-answer ${open === i ? "open" : ""} border-t border-white/[0.04]`}>
+                <p className="px-6 py-4 text-sm text-zinc-400 leading-relaxed">{f.a}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -534,79 +629,134 @@ function FAQ() {
   );
 }
 
-/* ───────── Final CTA ───────── */
+/* ─── Newsletter ─── */
+function Newsletter() {
+  const [email, setEmail] = useState("");
+  const [agreed, setAgreed] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-[#0d1120] px-6 py-28 text-center text-white sm:px-12">
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="h-[400px] w-[800px] rounded-full bg-gradient-to-r from-violet-600/20 to-blue-600/20 blur-[100px]" />
-      </div>
-      <div className="relative mx-auto max-w-2xl">
-        <h2 className="text-4xl font-black sm:text-5xl">
-          Ready to Build Your Own{" "}
-          <span className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent">
-            Language Model?
-          </span>
-        </h2>
-        <p className="mx-auto mt-5 max-w-lg text-base text-white/40 leading-relaxed">
-          Join engineers who decided to go from using AI to building it. Your journey starts this weekend.
+    <section className="bg-[#111116] px-6 py-24 sm:px-12">
+      <div className="mx-auto max-w-xl text-center">
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold text-violet-300">
+          Stay in the Loop
+        </div>
+        <h2 className="text-3xl font-extrabold tracking-tight text-white">Let&rsquo;s Keep in Touch</h2>
+        <p className="mt-4 text-zinc-400 leading-relaxed">
+          Join the IdeaWeaver AI Labs mailing list to get early access to cohort launches, hands-on GenAI workshops, and deep technical content for engineers transitioning into Generative AI.
         </p>
-        <a
-          href="#pricing"
-          className="mt-10 inline-block rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-12 py-4 text-lg font-bold text-white shadow-[0_0_60px_rgba(124,58,237,0.4)] transition hover:scale-105"
-        >
-          Enroll Now for $29
-        </a>
+
+        {submitted ? (
+          <div className="mt-8 rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-6 py-5 text-sm text-emerald-300">
+            ✅ You&rsquo;re on the list! Check your inbox to confirm your subscription.
+          </div>
+        ) : (
+          <form
+            className="mt-8 space-y-4"
+            onSubmit={(e) => { e.preventDefault(); if (agreed && email) setSubmitted(true); }}
+          >
+            <input
+              type="email"
+              required
+              placeholder="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full rounded-xl border border-white/[0.08] bg-[#09090b] px-5 py-3.5 text-sm text-white placeholder:text-zinc-500 focus:border-violet-500/50 focus:outline-none focus:ring-1 focus:ring-violet-500/30"
+            />
+            <label className="flex items-start gap-3 text-left text-xs text-zinc-500">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-0.5 shrink-0 accent-violet-600"
+              />
+              I agree to receive occasional emails about new courses, cohorts, and updates from IdeaWeaver AI Labs.
+            </label>
+            <button
+              type="submit"
+              className="shimmer-hover w-full rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3.5 text-sm font-semibold text-white shadow-[0_0_30px_rgba(124,58,237,0.35)] transition hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(124,58,237,0.45)]"
+            >
+              Subscribe
+            </button>
+            <p className="text-xs text-zinc-600">No spam. Unsubscribe anytime.</p>
+          </form>
+        )}
       </div>
     </section>
   );
 }
 
-/* ───────── Footer ───────── */
-
+/* ─── Footer ─── */
 function Footer() {
   return (
-    <footer className="bg-[#080b14] border-t border-white/5 px-6 py-10 text-center text-sm text-white/20">
-      <p className="font-semibold text-white/40">IdeaWeaver AI Labs</p>
-      <p className="mt-1">&copy; {new Date().getFullYear()} IdeaWeaver AI Labs. All rights reserved.</p>
+    <footer className="bg-[#09090b] border-t border-white/[0.06] px-6 py-14">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+          {/* Brand */}
+          <div className="max-w-xs">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 text-xs font-black text-white">IW</span>
+              <span className="text-base font-bold text-white">IdeaWeaver <span className="text-violet-400">AI Labs</span></span>
+            </div>
+            <p className="mt-3 text-sm text-zinc-500 leading-relaxed">
+              Hands-on, cohort-based Generative AI programs for Software and DevOps Engineers.
+            </p>
+          </div>
+
+          {/* Programs */}
+          <div>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-600">Programs</p>
+            <div className="space-y-3 text-sm text-zinc-400">
+              <a href="#courses" className="block transition hover:text-white">GenAI for DevOps Engineers</a>
+              <a href="#courses" className="block transition hover:text-white">30 Days of AI Agents</a>
+              <a href="#courses" className="block transition hover:text-white">Building Small Language Models</a>
+              <a href="#courses" className="block transition hover:text-white">4-Month AI Program</a>
+              <a href="#courses" className="block transition hover:text-white">100 Days of DevOps</a>
+            </div>
+          </div>
+
+          {/* Links */}
+          <div>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-600">Company</p>
+            <div className="space-y-3 text-sm text-zinc-400">
+              <a href="#about" className="block transition hover:text-white">About</a>
+              <a href="#instructor" className="block transition hover:text-white">Instructor</a>
+              <a href="#faq" className="block transition hover:text-white">FAQ</a>
+              <a href="https://www.ideaweaver.ai/sign_in" target="_blank" rel="noopener noreferrer"
+                className="block transition hover:text-violet-400">Log In</a>
+              <a href="https://www.ideaweaver.ai/sign_up" target="_blank" rel="noopener noreferrer"
+                className="block transition hover:text-violet-400">Sign Up</a>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 h-px bg-white/[0.06]" />
+        <div className="mt-6 flex flex-col items-center justify-between gap-4 text-xs text-zinc-600 sm:flex-row">
+          <p>&copy; {new Date().getFullYear()} IdeaWeaver AI Labs. All rights reserved.</p>
+          <div className="flex gap-5">
+            <a href="https://www.ideaweaver.ai/p/terms-of-use" target="_blank" rel="noopener noreferrer" className="transition hover:text-zinc-400">Terms of Use</a>
+            <a href="https://www.ideaweaver.ai/p/privacy-policy" target="_blank" rel="noopener noreferrer" className="transition hover:text-zinc-400">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 }
 
-/* ───────── Sticky CTA (Mobile) ───────── */
-
-function StickyCTA() {
-  return (
-    <div className="fixed right-0 bottom-0 left-0 z-50 border-t border-white/10 bg-[#080b14]/95 px-4 py-3 backdrop-blur-xl sm:hidden">
-      <a
-        href="#pricing"
-        className="block w-full rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 py-3 text-center font-bold text-white"
-      >
-        Enroll Now — $29
-      </a>
-    </div>
-  );
-}
-
-/* ───────── Page ───────── */
-
+/* ─── Page ─── */
 export default function Home() {
   return (
     <>
+      <AnnouncementBar />
       <Nav />
       <Hero />
-      <WhyThisCourse />
-      <WhatYouLearn />
-      <HandsOn />
-      <WhoIsThisFor />
-      <Instructor />
-      <Pricing />
-      <Bonuses />
+      <CoursesSection />
+      <AboutSection />
+      <CurriculumHighlights />
+      <InstructorSection />
       <FAQ />
-      <FinalCTA />
+      <Newsletter />
       <Footer />
-      <StickyCTA />
     </>
   );
 }

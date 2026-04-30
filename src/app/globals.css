@@ -1,21 +1,61 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #7c3aed;
-  --color-primary-dark: #6d28d9;
-  --color-primary-light: #a78bfa;
-  --color-accent: #3b82f6;
-  --color-accent-light: #93c5fd;
-  --color-dark: #0f172a;
-  --color-dark-light: #1e293b;
-  --color-gray: #64748b;
-  --color-gray-light: #f1f5f9;
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-brand: #7c3aed;
+  --color-brand-light: #a78bfa;
+  --color-accent: #4f46e5;
+  --color-surface: #09090b;
+  --color-surface-alt: #111116;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+/* ── Shimmer button effect ── */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(250%)  skewX(-15deg); }
+}
+
+.shimmer-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  transform: translateX(-100%) skewX(-15deg);
+  pointer-events: none;
+}
+
+.shimmer-hover:hover::after {
+  animation: shimmer 0.7s ease-in-out;
+}
+
+/* ── Float animation (hero terminal window) ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ── Gradient border cards ── */
+.gradient-border {
+  background:
+    linear-gradient(#111116, #111116) padding-box,
+    linear-gradient(135deg, rgba(124, 58, 237, 0.4), rgba(79, 70, 229, 0.15)) border-box;
+  border: 1px solid transparent;
+}
+
+/* ── FAQ smooth accordion ── */
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -31,6 +71,19 @@ html {
   animation: fade-in-up 0.6s ease-out forwards;
 }
 
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+  opacity: 0;
+}
+
+.faq-answer.open {
+  max-height: 320px;
+  opacity: 1;
+}
+
+/* ── Pulse glow (kept for compatibility) ── */
 @keyframes pulse-glow {
   0%, 100% {
     box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);

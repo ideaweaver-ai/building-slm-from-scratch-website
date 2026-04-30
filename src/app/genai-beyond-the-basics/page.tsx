@@ -319,6 +319,37 @@ export default function AISystemsEngineeringPage() {
         </div>
       </section>
 
+      {/* What's Included */}
+      <section className="px-6 py-24 sm:px-12">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold text-violet-300">
+            What&rsquo;s Included
+          </div>
+          <h2 className="mb-12 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            Everything you need to succeed.
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { icon: "🎥", title: "Live Sessions", desc: "Instructor-led live classes for the full duration of the cohort, multiple days a week." },
+              { icon: "⚡", title: "GPU Access", desc: "Real GPU resources for hands-on labs — fine-tuning, inference, and evaluation." },
+              { icon: "♾️", title: "Lifetime Access", desc: "All session recordings included. Revisit any topic at any time, forever." },
+              { icon: "💬", title: "Discord Community", desc: "Private Discord community to ask questions, share progress, and collaborate with peers." },
+              { icon: "🔄", title: "All Future Updates", desc: "Course content is updated as the ecosystem evolves — you get every update at no extra cost." },
+              { icon: "🏗️", title: "Hands-On Labs", desc: "Every topic comes with practical exercises built around real-world production patterns." },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-white/[0.06] bg-[#111116] p-6 transition hover:border-violet-500/30"
+              >
+                <div className="mb-3 text-3xl">{item.icon}</div>
+                <h3 className="font-bold text-white text-sm">{item.title}</h3>
+                <p className="mt-2 text-xs text-zinc-400 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Batch cards */}
       <section id="batches" className="bg-[#111116] px-6 py-24 sm:px-12">
         <div className="mx-auto max-w-4xl">

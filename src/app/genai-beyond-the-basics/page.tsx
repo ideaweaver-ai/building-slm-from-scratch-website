@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 const batches = [
   {
     label: "Morning",
@@ -51,6 +53,70 @@ const audience = [
   "ML Engineers",
   "Anyone building real-world AI applications",
 ];
+
+const faqs = [
+  {
+    q: "Do I need prior AI or ML experience?",
+    a: "Yes — this course assumes you already understand the basics of Generative AI (LLMs, prompting, basic tooling). If you are new to GenAI, we recommend starting with our GenAI for DevOps Engineers course first.",
+  },
+  {
+    q: "What does 'cohort-based' mean?",
+    a: "You learn alongside a group of engineers at the same stage. Sessions are live and instructor-led, running multiple days a week. Recordings are available for enrolled students.",
+  },
+  {
+    q: "Do I get real GPU access?",
+    a: "Yes. Topics like supervised fine-tuning and GPU inference include access to real GPU resources — not simulated environments or toy datasets.",
+  },
+  {
+    q: "What is the difference between the Morning and Evening batches?",
+    a: "The curriculum is identical. The only difference is the schedule — Morning runs May 9–31 at 8:00–9:30am PST, and Evening runs May 8–30 at 7:00–8:30pm PST. Pick whichever fits your timezone and routine.",
+  },
+  {
+    q: "Are there refunds?",
+    a: "At this time we do not offer refunds. If you have questions about the course before enrolling, reach out directly.",
+  },
+];
+
+function FAQ() {
+  const [open, setOpen] = useState<number | null>(null);
+
+  return (
+    <section className="px-6 py-24 sm:px-12">
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold text-violet-300">
+          FAQ
+        </div>
+        <h2 className="mb-12 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-2">
+          {faqs.map((f, i) => (
+            <div
+              key={i}
+              className="overflow-hidden rounded-xl border border-white/[0.06] bg-[#111116] transition hover:border-violet-500/20"
+            >
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="flex w-full items-center justify-between px-6 py-5 text-left"
+              >
+                <span className="pr-4 font-semibold text-white text-sm">{f.q}</span>
+                <svg
+                  className={`h-4 w-4 shrink-0 text-zinc-500 transition-transform duration-300 ${open === i ? "rotate-180" : ""}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div className={`faq-answer ${open === i ? "open" : ""} border-t border-white/[0.04]`}>
+                <p className="px-6 py-4 text-sm text-zinc-400 leading-relaxed">{f.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function AISystemsEngineeringPage() {
   return (
@@ -307,6 +373,9 @@ export default function AISystemsEngineeringPage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ */}
+      <FAQ />
 
       {/* Footer */}
       <footer className="border-t border-white/[0.06] px-6 py-10">

@@ -156,7 +156,7 @@ function AnnouncementBar() {
       <div className="pointer-events-none absolute inset-0 bg-[#09090b]/60" />
       <span className="relative">
         🚀{" "}
-        <span className="font-semibold text-white">New Cohort Starts April 3, 2026</span>
+        <span className="font-semibold text-white">GenAI Beyond the Basics — New Batches Starting May 8 & 9</span>
         {" "}— Limited Seats Available.{" "}
         <a href="#courses" className="text-violet-300 underline decoration-violet-500/40 hover:text-violet-200">
           Enroll Now →
@@ -347,11 +347,25 @@ function CourseCard({ course }: { course: Course }) {
   );
 }
 
-function CoursesSection() {
-  const [filter, setFilter] = useState("All");
-  const filters = ["All", "4-Month Program", "1-Month Cohort", "30-Day Cohort", "30-Day Course", "Free Course"];
+const upcomingBatches = [
+  {
+    label: "Morning",
+    icon: "🌅",
+    dates: "May 9 – May 31",
+    time: "8:00 – 9:30am PST",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6721587",
+  },
+  {
+    label: "Evening",
+    icon: "🌙",
+    dates: "May 8 – May 30",
+    time: "7:00 – 8:30pm PST",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6721588",
+  },
+];
 
-  const filtered = filter === "All" ? courses : courses.filter((c) => c.tag === filter);
+function CoursesSection() {
+  const [tab, setTab] = useState<"upcoming" | "past">("upcoming");
 
   return (
     <section id="courses" className="bg-[#09090b] px-6 py-24 sm:px-12">
@@ -360,7 +374,7 @@ function CoursesSection() {
         <div className="mb-4 flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 w-fit text-sm font-semibold text-violet-300">
           Programs & Courses
         </div>
-        <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
               Learn Generative AI by Building Real Systems
@@ -375,29 +389,102 @@ function CoursesSection() {
           </a>
         </div>
 
-        {/* Filters */}
-        <div className="mb-8 flex flex-wrap gap-2">
-          {filters.map((f) => (
+        {/* Tabs */}
+        <div className="mb-10 flex gap-2 border-b border-white/[0.06] pb-0">
+          {(["upcoming", "past"] as const).map((t) => (
             <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-                filter === f
-                  ? "bg-violet-600 text-white"
-                  : "border border-white/[0.08] text-zinc-400 hover:border-violet-500/40 hover:text-zinc-200"
+              key={t}
+              onClick={() => setTab(t)}
+              className={`relative px-5 py-3 text-sm font-semibold transition ${
+                tab === t
+                  ? "text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-violet-500"
+                  : "text-zinc-500 hover:text-zinc-300"
               }`}
             >
-              {f}
+              {t === "upcoming" ? "🟢 Upcoming" : "Past Courses"}
             </button>
           ))}
         </div>
 
-        {/* Grid */}
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((c) => (
-            <CourseCard key={c.title} course={c} />
-          ))}
-        </div>
+        {/* Upcoming tab */}
+        {tab === "upcoming" && (
+          <div>
+            {/* Course hero */}
+            <div className="mb-10 overflow-hidden rounded-2xl border border-fuchsia-500/30 bg-gradient-to-br from-fuchsia-500/[0.06] to-purple-600/[0.04] p-8 sm:p-10">
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+                <div className="max-w-2xl">
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-fuchsia-500/30 bg-fuchsia-500/10 px-3 py-1 text-xs font-semibold text-fuchsia-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Enrolling Now · May 2026
+                  </div>
+                  <h3 className="text-2xl font-black text-white sm:text-3xl">
+                    GenAI Beyond the Basics
+                  </h3>
+                  <p className="mt-3 text-sm text-zinc-400 leading-relaxed max-w-xl">
+                    For engineers who already understand GenAI fundamentals and want to go deeper. A hands-on, system-level course covering MCP, production-grade RAG, supervised fine-tuning, GPU inference, and model evaluation.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {["MCP", "Production RAG", "Fine-Tuning", "GPU Inference", "Model Evaluation"].map((t) => (
+                      <span key={t} className="rounded-full border border-fuchsia-500/20 bg-fuchsia-500/10 px-3 py-0.5 text-xs font-medium text-fuchsia-300">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <a
+                  href="/genai-beyond-the-basics"
+                  className="shrink-0 text-sm text-fuchsia-400 underline decoration-fuchsia-500/40 transition hover:text-fuchsia-300 whitespace-nowrap"
+                >
+                  View full course details →
+                </a>
+              </div>
+
+              {/* Batch cards */}
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {upcomingBatches.map((b) => (
+                  <div key={b.label} className="flex flex-col gap-4 rounded-xl border border-white/[0.08] bg-[#09090b] p-6">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{b.icon}</span>
+                      <span className="text-lg font-bold text-white">{b.label}</span>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center gap-2 text-zinc-400">
+                        <svg className="h-4 w-4 text-fuchsia-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        {b.dates}
+                      </div>
+                      <div className="flex items-center gap-2 text-zinc-400">
+                        <svg className="h-4 w-4 text-fuchsia-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {b.time}
+                      </div>
+                    </div>
+                    <a
+                      href={b.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-auto block rounded-lg bg-gradient-to-r from-fuchsia-600 to-purple-600 py-2.5 text-center text-sm font-semibold text-white shadow-[0_0_20px_rgba(192,38,211,0.3)] transition hover:scale-[1.02] hover:shadow-[0_0_35px_rgba(192,38,211,0.45)]"
+                    >
+                      Enroll — {b.label} →
+                    </a>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 text-xs text-amber-400/70">All timings in PST — please adjust for your timezone.</p>
+            </div>
+          </div>
+        )}
+
+        {/* Past courses tab */}
+        {tab === "past" && (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {courses.map((c) => (
+              <CourseCard key={c.title} course={c} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

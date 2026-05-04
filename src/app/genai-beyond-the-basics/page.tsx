@@ -124,13 +124,8 @@ export default function AISystemsEngineeringPage() {
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#09090b]/95 px-6 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between">
-          <a href="/" className="flex items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 text-xs font-black text-white">
-              IW
-            </span>
-            <span className="text-base font-bold text-white">
-              IdeaWeaver <span className="text-violet-400">AI Labs</span>
-            </span>
+          <a href="/" className="flex items-center">
+            <img src="/logo.png" alt="IdeaWeaver AI Labs" className="h-9 w-auto" />
           </a>
           <div className="flex items-center gap-3">
             <a
@@ -411,13 +406,8 @@ export default function AISystemsEngineeringPage() {
       {/* Footer */}
       <footer className="border-t border-white/[0.06] px-6 py-10">
         <div className="mx-auto flex max-w-4xl flex-col items-center justify-between gap-4 text-sm text-zinc-600 sm:flex-row">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 text-xs font-black text-white">
-              IW
-            </span>
-            <span className="text-zinc-500">
-              IdeaWeaver <span className="text-violet-500">AI Labs</span>
-            </span>
+          <div className="flex items-center">
+            <img src="/logo.png" alt="IdeaWeaver AI Labs" className="h-7 w-auto opacity-70" />
           </div>
           <p>&copy; {new Date().getFullYear()} IdeaWeaver AI Labs. All rights reserved.</p>
           <div className="flex gap-5">

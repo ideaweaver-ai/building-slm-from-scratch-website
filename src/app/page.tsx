@@ -265,13 +265,8 @@ function Nav() {
   return (
     <nav className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#09090b]/95 px-6 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between">
-        <a href="/" className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 text-xs font-black text-white">
-            IW
-          </span>
-          <span className="text-base font-bold text-white">
-            IdeaWeaver <span className="text-violet-400">AI Labs</span>
-          </span>
+        <a href="/" className="flex items-center">
+          <img src="/logo.png" alt="IdeaWeaver AI Labs" className="h-9 w-auto" />
         </a>
 
         <div className="hidden items-center gap-8 text-sm md:flex">
@@ -940,9 +935,8 @@ function Footer() {
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-xs">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 text-xs font-black text-white">IW</span>
-              <span className="text-base font-bold text-white">IdeaWeaver <span className="text-violet-400">AI Labs</span></span>
+            <div className="flex items-center">
+              <img src="/logo.png" alt="IdeaWeaver AI Labs" className="h-8 w-auto" />
             </div>
             <p className="mt-3 text-sm text-zinc-500 leading-relaxed">
               Hands-on, cohort-based Generative AI programs for Software and DevOps Engineers.

@@ -90,6 +90,16 @@ const courses: Course[] = [
     link: "https://www.ideaweaver.ai/courses",
     duration: "4 weeks",
   },
+  {
+    title: "GenAI Beyond the Basics",
+    description:
+      "A hands-on, system-level program for engineers who already understand GenAI fundamentals. Covers MCP, production-grade RAG, supervised fine-tuning, GPU inference, and model evaluation.",
+    price: 39,
+    tag: "1-Month Cohort",
+    tagColor: "from-fuchsia-500 to-purple-600",
+    link: "https://www.ideaweaver.ai/courses",
+    duration: "4 weeks",
+  },
 ];
 
 const freeCourse: Course = {
@@ -169,18 +179,75 @@ const testimonials = [
 
 const upcomingBatches = [
   {
-    label: "Morning",
+    label: "Weekday Morning",
     icon: "🌅",
-    dates: "May 9 – May 31",
-    time: "8:00 – 9:30am PST",
-    link: "https://www.ideaweaver.ai/purchase?product_id=6721587",
+    dates: "Jul 6 – Jul 29",
+    time: "7:00 – 8:00am PST",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6781624",
   },
   {
-    label: "Evening",
+    label: "Weekday Evening",
     icon: "🌙",
-    dates: "May 8 – May 30",
+    dates: "Jul 6 – Jul 29",
+    time: "7:00 – 8:00pm PST",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6781623",
+  },
+  {
+    label: "Weekend Morning",
+    icon: "🌄",
+    dates: "Jul 4 – Jul 26",
+    time: "7:00 – 8:30am PST",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6781626",
+  },
+  {
+    label: "Weekend Evening",
+    icon: "🌇",
+    dates: "Jul 3 – Jul 26",
     time: "7:00 – 8:30pm PST",
-    link: "https://www.ideaweaver.ai/purchase?product_id=6721588",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6781625",
+  },
+];
+
+const upcomingCurriculum = [
+  {
+    week: "Week 1",
+    title: "Foundations of Generative AI",
+    topics: [
+      "Introduction to Generative AI",
+      "Understanding GPUs and AI Infrastructure",
+      "AI Inference Fundamentals",
+      "Running and Evaluating Large Language Models",
+    ],
+  },
+  {
+    week: "Week 2",
+    title: "AI in Cloud and Kubernetes",
+    topics: [
+      "AWS Bedrock Fundamentals",
+      "Building AWS DevOps Agents",
+      "AI-Powered Kubernetes Operations",
+      "Real-world DevOps Use Cases",
+    ],
+  },
+  {
+    week: "Week 3",
+    title: "Building DevOps AI Agents",
+    topics: [
+      "Designing AI Agents for DevOps Workflows",
+      "GitHub Pull Request Review Automation",
+      "AI-Powered Performance Troubleshooting",
+      "Multi-Agent Systems with CrewAI",
+    ],
+  },
+  {
+    week: "Week 4",
+    title: "Advanced DevOps AI",
+    topics: [
+      "Model Context Protocol (MCP) for DevOps",
+      "Retrieval-Augmented Generation (RAG)",
+      "Fine-Tuning LLMs for DevOps Use Cases",
+      "Building Production-Ready AI Solutions",
+    ],
   },
 ];
 
@@ -248,7 +315,7 @@ function AnnouncementBar() {
       <div className="pointer-events-none absolute inset-0 bg-[#09090b]/60" />
       <span className="relative">
         🚀{" "}
-        <span className="font-semibold text-white">GenAI Beyond the Basics — New Batches Starting May 8 & 9</span>
+        <span className="font-semibold text-white">GenAI for DevOps Engineers — New Batches Starting Jul 3 & 6</span>
         {" "}— Limited Seats Available.{" "}
         <a href="#courses" className="text-violet-300 underline decoration-violet-500/40 hover:text-violet-200">
           Enroll Now →
@@ -274,6 +341,7 @@ function Nav() {
           <a href="#about" className="text-zinc-400 transition hover:text-white">About</a>
           <a href="#instructor" className="text-zinc-400 transition hover:text-white">Instructor</a>
           <a href="#faq" className="text-zinc-400 transition hover:text-white">FAQ</a>
+          <a href="/ai-insights" className="text-violet-400 transition hover:text-white">AI Insights</a>
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -525,30 +593,48 @@ function CoursesSection() {
 
         {/* Upcoming */}
         {tab === "upcoming" && (
-          <div className="overflow-hidden rounded-2xl border border-fuchsia-500/30 bg-gradient-to-br from-fuchsia-500/[0.06] to-purple-600/[0.04] p-8 sm:p-10">
+          <div className="overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/[0.06] to-cyan-600/[0.04] p-8 sm:p-10">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
               <div className="max-w-2xl">
-                <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-fuchsia-500/30 bg-fuchsia-500/10 px-3 py-1 text-xs font-semibold text-fuchsia-300">
+                <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-300">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  Enrolling Now · May 2026
+                  Enrolling Now · Jul 2026
                 </div>
-                <h3 className="text-2xl font-black text-white sm:text-3xl">GenAI Beyond the Basics</h3>
+                <h3 className="text-2xl font-black text-white sm:text-3xl">GenAI for DevOps Engineers</h3>
                 <p className="mt-3 text-sm text-zinc-400 leading-relaxed max-w-xl">
-                  For engineers who already understand GenAI fundamentals and want to go deeper. A hands-on, system-level course covering MCP, production-grade RAG, supervised fine-tuning, GPU inference, and model evaluation.
+                  A 4-week, instructor-led program for DevOps, Platform, and SRE engineers. Integrate Generative AI into your daily workflows — from AWS Bedrock and Kubernetes operations to building autonomous DevOps agents and fine-tuning LLMs. Hands-on labs via Google Colab.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {["MCP", "Production RAG", "Fine-Tuning", "GPU Inference", "Model Evaluation"].map((t) => (
-                    <span key={t} className="rounded-full border border-fuchsia-500/20 bg-fuchsia-500/10 px-3 py-0.5 text-xs font-medium text-fuchsia-300">
+                  {["AWS Bedrock", "Kubernetes AI", "DevOps Agents", "CrewAI", "MCP", "RAG", "Fine-Tuning", "Google Colab Labs"].map((t) => (
+                    <span key={t} className="rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-0.5 text-xs font-medium text-blue-300">
                       {t}
                     </span>
                   ))}
                 </div>
               </div>
-              <a href="/genai-beyond-the-basics"
-                className="shrink-0 text-sm text-fuchsia-400 underline decoration-fuchsia-500/40 transition hover:text-fuchsia-300 whitespace-nowrap">
-                View full course details →
-              </a>
             </div>
+
+            {/* Curriculum */}
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {upcomingCurriculum.map((w) => (
+                <div key={w.week} className="rounded-xl border border-white/[0.08] bg-[#09090b] p-5">
+                  <div className="mb-1 text-xs font-semibold text-blue-400 uppercase tracking-wider">{w.week}</div>
+                  <div className="mb-3 text-sm font-bold text-white leading-snug">{w.title}</div>
+                  <ul className="space-y-1.5">
+                    {w.topics.map((topic) => (
+                      <li key={topic} className="flex items-start gap-2 text-xs text-zinc-400 leading-snug">
+                        <svg className="mt-0.5 h-3 w-3 shrink-0 text-blue-500/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
+                        </svg>
+                        {topic}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {/* Batch cards */}
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {upcomingBatches.map((b) => (
                 <div key={b.label} className="flex flex-col gap-4 rounded-xl border border-white/[0.08] bg-[#09090b] p-6">
@@ -558,20 +644,20 @@ function CoursesSection() {
                   </div>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2 text-zinc-400">
-                      <svg className="h-4 w-4 text-fuchsia-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg className="h-4 w-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       {b.dates}
                     </div>
                     <div className="flex items-center gap-2 text-zinc-400">
-                      <svg className="h-4 w-4 text-fuchsia-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg className="h-4 w-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       {b.time}
                     </div>
                   </div>
                   <a href={b.link} target="_blank" rel="noopener noreferrer"
-                    className="mt-auto block rounded-lg bg-gradient-to-r from-fuchsia-600 to-purple-600 py-2.5 text-center text-sm font-semibold text-white transition hover:scale-[1.02]">
+                    className="mt-auto block rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 py-2.5 text-center text-sm font-semibold text-white transition hover:scale-[1.02]">
                     Enroll — {b.label} →
                   </a>
                 </div>

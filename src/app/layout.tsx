@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Build Your Own Language Model from Scratch | IdeaWeaver AI Labs",
+  title: "IdeaWeaver AI Labs | Generative AI Courses for DevOps & Software Engineers",
   description:
-    "2-day hands-on workshop to build your own small language model from scratch. No prior AI experience required. Only $29.",
+    "Hands-on, cohort-based Generative AI programs for Software and DevOps Engineers. Learn AWS Bedrock, AI agents, RAG, fine-tuning, and more. Real GPU access included.",
 };
 
 export default function RootLayout({

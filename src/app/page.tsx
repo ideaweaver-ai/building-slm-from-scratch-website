@@ -664,6 +664,42 @@ function CoursesSection() {
               ))}
             </div>
             <p className="mt-4 text-xs text-amber-400/70">All timings in PST — please adjust for your timezone.</p>
+
+            {/* India payment option */}
+            <div className="mt-8 overflow-hidden rounded-2xl border border-orange-500/25 bg-gradient-to-br from-orange-500/[0.05] to-amber-500/[0.03]">
+              <div className="flex items-center gap-2 border-b border-orange-500/15 px-6 py-3">
+                <span className="text-lg">🇮🇳</span>
+                <span className="text-sm font-bold text-orange-300">Special Payment Option for India</span>
+              </div>
+              <div className="flex flex-col gap-8 p-6 sm:flex-row sm:items-start">
+                <img
+                  src="/paytm-qr.jpg"
+                  alt="Paytm / UPI QR Code"
+                  className="w-44 shrink-0 rounded-xl border border-white/[0.08] self-center sm:self-start"
+                />
+                <div className="flex flex-col gap-4">
+                  <p className="text-sm text-zinc-300 leading-relaxed">
+                    You can pay using the Paytm / UPI QR code. Scan with any UPI app — Paytm, PhonePe, Google Pay, or BHIM.
+                  </p>
+                  <p className="text-sm text-zinc-400 leading-relaxed">
+                    After payment, please email your <span className="text-white font-semibold">transaction ID</span> and{" "}
+                    <span className="text-white font-semibold">registered email address</span> to:
+                  </p>
+                  <a
+                    href="mailto:help@ideaweaver.ai"
+                    className="inline-flex w-fit items-center gap-2 rounded-lg border border-orange-500/30 bg-orange-500/10 px-4 py-2.5 text-sm font-semibold text-orange-300 transition hover:bg-orange-500/20"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    help@ideaweaver.ai
+                  </a>
+                  <p className="text-xs text-zinc-500 leading-relaxed">
+                    We will confirm your enrollment and add you to the batch within 24 hours of receiving your email.
+</p>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 

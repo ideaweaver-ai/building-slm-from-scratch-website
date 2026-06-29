@@ -676,7 +676,7 @@ function CoursesSection() {
               <div className="flex items-start gap-2.5 sm:border-l sm:border-white/[0.06] sm:pl-6">
                 <span className="mt-0.5 text-base">☁️</span>
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                  <span className="font-semibold text-zinc-200">AWS labs (Week 2)</span> require your own AWS account. The AWS Free Tier is sufficient for all exercises.
+                  <span className="font-semibold text-zinc-200">AWS labs (Week 2)</span> require your own AWS account.
                 </p>
               </div>
             </div>

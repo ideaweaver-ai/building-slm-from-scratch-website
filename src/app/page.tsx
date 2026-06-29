@@ -665,6 +665,22 @@ function CoursesSection() {
             </div>
             <p className="mt-4 text-xs text-amber-400/70">All timings in PST — please adjust for your timezone.</p>
 
+            {/* Labs note */}
+            <div className="mt-5 flex flex-col gap-2 rounded-xl border border-white/[0.06] bg-[#111116] px-5 py-4 sm:flex-row sm:items-start sm:gap-6">
+              <div className="flex items-start gap-2.5">
+                <span className="mt-0.5 text-base">📓</span>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  <span className="font-semibold text-zinc-200">Google Colab labs included</span> — no local setup required. All core labs run on Google Colab at no extra cost.
+                </p>
+              </div>
+              <div className="flex items-start gap-2.5 sm:border-l sm:border-white/[0.06] sm:pl-6">
+                <span className="mt-0.5 text-base">☁️</span>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  <span className="font-semibold text-zinc-200">AWS labs (Week 2)</span> require your own AWS account. The AWS Free Tier is sufficient for all exercises.
+                </p>
+              </div>
+            </div>
+
             {/* India payment option */}
             <div className="mt-8 overflow-hidden rounded-2xl border border-orange-500/25 bg-gradient-to-br from-orange-500/[0.05] to-amber-500/[0.03]">
               <div className="flex items-center gap-2 border-b border-orange-500/15 px-6 py-3">

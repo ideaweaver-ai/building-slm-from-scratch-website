@@ -102,16 +102,38 @@ const courses: Course[] = [
   },
 ];
 
-const freeCourse: Course = {
-  title: "100 Days of DevOps",
-  description:
-    "A comprehensive DevOps program covering Linux, scripting, CI/CD, containers, Kubernetes, cloud infrastructure, and monitoring. Designed for engineers who want a strong operational foundation.",
-  price: 0,
-  free: true,
-  tag: "Free Course",
-  tagColor: "from-zinc-500 to-zinc-600",
-  link: "https://www.ideaweaver.ai/courses",
-};
+const freeCourses: Course[] = [
+  {
+    title: "100 Days of DevOps",
+    description:
+      "A comprehensive DevOps program covering Linux, scripting, CI/CD, containers, Kubernetes, cloud infrastructure, and monitoring. Designed for engineers who want a strong operational foundation.",
+    price: 0,
+    free: true,
+    tag: "Free Course",
+    tagColor: "from-zinc-500 to-zinc-600",
+    link: "https://www.ideaweaver.ai/courses",
+  },
+  {
+    title: "100 Days of GenAI for DevOps – English",
+    description:
+      "A free 100-day program covering Generative AI for DevOps engineers in English. Hands-on content spanning LLMs, AI agents, RAG, and real-world DevOps automation use cases.",
+    price: 0,
+    free: true,
+    tag: "Free Course",
+    tagColor: "from-emerald-500 to-teal-600",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6786786",
+  },
+  {
+    title: "100 Days of GenAI for DevOps – Hindi",
+    description:
+      "A free 100-day program covering Generative AI for DevOps engineers in Hindi. Same hands-on curriculum — LLMs, AI agents, RAG, and DevOps automation — delivered in Hindi.",
+    price: 0,
+    free: true,
+    tag: "Free Course",
+    tagColor: "from-emerald-500 to-teal-600",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6786785",
+  },
+];
 
 const books: Book[] = [
   {
@@ -742,8 +764,8 @@ function CoursesSection() {
 
         {/* Free course */}
         {tab === "free" && (
-          <div className="max-w-md">
-            <CourseCard course={freeCourse} />
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {freeCourses.map((c) => <CourseCard key={c.title} course={c} />)}
           </div>
         )}
       </div>

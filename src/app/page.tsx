@@ -13,6 +13,7 @@ type Course = {
   link: string;
   featured?: boolean;
   duration?: string;
+  ctaLabel?: string;
 };
 
 type Book = {
@@ -132,6 +133,31 @@ const freeCourses: Course[] = [
     tag: "Free Course",
     tagColor: "from-emerald-500 to-teal-600",
     link: "https://www.ideaweaver.ai/purchase?product_id=6786785",
+  },
+];
+
+const products: Course[] = [
+  {
+    title: "DevOps Open Agent",
+    description:
+      "An open-source AI agent built for DevOps workflows — automate troubleshooting, infrastructure tasks, and day-to-day operations. Fully open source and free to use.",
+    price: 0,
+    free: true,
+    tag: "Open Source",
+    tagColor: "from-sky-500 to-blue-600",
+    link: "https://github.com/ideaweaver-ai/devops-open-agent",
+    ctaLabel: "View on GitHub →",
+  },
+  {
+    title: "NVIDIA-Certified Associate: AI Infrastructure and Operations — Practice Exam",
+    description:
+      "A free 50-question practice test covering GPU architecture, the NVIDIA software stack, distributed training, and infrastructure operations. Includes a Practice Mode with instant explanations and a timed Exam Mode.",
+    price: 0,
+    free: true,
+    tag: "Certification Prep",
+    tagColor: "from-lime-500 to-green-600",
+    link: "https://certification.ideaweaver.ai/",
+    ctaLabel: "Start Practice →",
   },
 ];
 
@@ -362,8 +388,8 @@ function Nav() {
           <a href="#courses" className="text-zinc-400 transition hover:text-white">Courses</a>
           <a href="#about" className="text-zinc-400 transition hover:text-white">About</a>
           <a href="#instructor" className="text-zinc-400 transition hover:text-white">Instructor</a>
+          <a href="#products" className="text-zinc-400 transition hover:text-white">Product</a>
           <a href="#faq" className="text-zinc-400 transition hover:text-white">FAQ</a>
-          <a href="/ai-insights" className="text-violet-400 transition hover:text-white">AI Insights</a>
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -387,7 +413,7 @@ function Nav() {
 
       {mobileOpen && (
         <div className="flex flex-col gap-4 border-t border-white/[0.06] py-5 md:hidden">
-          {[["#courses", "Courses"], ["#about", "About"], ["#instructor", "Instructor"], ["#faq", "FAQ"]].map(([href, label]) => (
+          {[["#courses", "Courses"], ["#about", "About"], ["#instructor", "Instructor"], ["#products", "Product"], ["#faq", "FAQ"]].map(([href, label]) => (
             <a key={href} href={href} onClick={() => setMobileOpen(false)}
               className="text-sm text-zinc-400 transition hover:text-white">
               {label}
@@ -490,7 +516,7 @@ function CourseCard({ course }: { course: Course }) {
           </div>
           <a href={course.link} target="_blank" rel="noopener noreferrer"
             className="shimmer-hover inline-block rounded-lg bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_0_20px_rgba(124,58,237,0.3)] transition hover:scale-105 hover:shadow-[0_0_35px_rgba(124,58,237,0.45)]">
-            Enroll →
+            {course.ctaLabel ?? "Enroll →"}
           </a>
         </div>
       </div>
@@ -768,6 +794,28 @@ function CoursesSection() {
             {freeCourses.map((c) => <CourseCard key={c.title} course={c} />)}
           </div>
         )}
+      </div>
+    </section>
+  );
+}
+
+/* ─── Products ─── */
+function ProductsSection() {
+  return (
+    <section id="products" className="mx-auto max-w-7xl px-6 py-24 sm:px-12">
+      <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <span className="inline-flex items-center rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-xs font-semibold uppercase tracking-widest text-zinc-500">
+            Products
+          </span>
+          <h2 className="mt-4 text-3xl font-black text-white sm:text-4xl">Free Tools &amp; Resources</h2>
+          <p className="mt-3 max-w-2xl text-sm text-zinc-400 leading-relaxed">
+            Open-source projects and practice tools built by IdeaWeaver, free for anyone to use.
+          </p>
+        </div>
+      </div>
+      <div className="grid gap-5 sm:grid-cols-2">
+        {products.map((p) => <CourseCard key={p.title} course={p} />)}
       </div>
     </section>
   );
@@ -1136,6 +1184,7 @@ function Footer() {
             <div className="space-y-3 text-sm text-zinc-400">
               <a href="#about" className="block transition hover:text-white">About</a>
               <a href="#instructor" className="block transition hover:text-white">Instructor</a>
+              <a href="#products" className="block transition hover:text-white">Product</a>
               <a href="#faq" className="block transition hover:text-white">FAQ</a>
               <a href="https://www.ideaweaver.ai/sign_in" target="_blank" rel="noopener noreferrer" className="block transition hover:text-violet-400">Log In</a>
               <a href="https://www.ideaweaver.ai/sign_up" target="_blank" rel="noopener noreferrer" className="block transition hover:text-violet-400">Sign Up</a>
@@ -1169,6 +1218,7 @@ export default function Home() {
       <TestimonialsSection />
       <InstructorSection />
       <CommunitySection />
+      <ProductsSection />
       <FAQ />
       <Newsletter />
       <Footer />

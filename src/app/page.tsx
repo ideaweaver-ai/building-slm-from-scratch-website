@@ -299,6 +299,110 @@ const upcomingCurriculum = [
   },
 ];
 
+/* ─── August Upcoming Data ─── */
+const augDevOpsBatches = [
+  {
+    label: "Weekday Morning",
+    icon: "🌅",
+    dates: "Aug 3 – Aug 26",
+    time: "7:00 – 8:00am PST (Mon–Wed)",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6798715",
+  },
+  {
+    label: "Weekday Evening",
+    icon: "🌙",
+    dates: "Aug 3 – Aug 26",
+    time: "7:00 – 8:00pm PST (Mon–Wed)",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6798719",
+  },
+  {
+    label: "Weekend Morning",
+    icon: "🌄",
+    dates: "Aug 8 – Aug 30",
+    time: "7:00 – 8:30am PST (Sat–Sun)",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6798707",
+  },
+  {
+    label: "Weekend Evening",
+    icon: "🌇",
+    dates: "Aug 7 – Aug 29",
+    time: "7:00 – 8:30pm PST (Fri–Sat)",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6781625",
+  },
+];
+
+const beginnersCurriculum = [
+  {
+    week: "Week 1",
+    title: "Foundations of Generative AI",
+    topics: [
+      "Introduction to Generative AI",
+      "Understanding GPUs and AI Infrastructure",
+      "Prompt & Context Engineering",
+    ],
+  },
+  {
+    week: "Week 2",
+    title: "Building AI Applications",
+    topics: [
+      "Building a Chatbot using LangChain",
+      "Introduction to Hugging Face",
+      "Running Models Locally with Ollama",
+    ],
+  },
+  {
+    week: "Week 3",
+    title: "Building DevOps AI Agents",
+    topics: [
+      "Designing AI Agents for DevOps Workflows",
+      "GitHub Pull Request Review Automation",
+      "AI-Powered Performance Troubleshooting",
+      "Multi-Agent Systems with CrewAI",
+    ],
+  },
+  {
+    week: "Week 4",
+    title: "Advanced DevOps AI",
+    topics: [
+      "Model Context Protocol (MCP) for DevOps",
+      "Retrieval-Augmented Generation (RAG)",
+      "Fine-Tuning LLMs for DevOps Use Cases",
+      "Building Production-Ready AI Solutions",
+    ],
+  },
+];
+
+const augBeginnersBatches = [
+  {
+    label: "Weekday Morning",
+    icon: "🌅",
+    dates: "Aug 3 – Aug 26",
+    time: "8:30 – 9:30am PST (Mon–Wed)",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6798734",
+  },
+  {
+    label: "Weekday Evening",
+    icon: "🌙",
+    dates: "Aug 3 – Aug 26",
+    time: "8:30 – 9:30pm PST (Mon–Wed)",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6798735",
+  },
+  {
+    label: "Weekend Morning",
+    icon: "🌄",
+    dates: "Aug 8 – Aug 30",
+    time: "9:00 – 10:30am PST (Sat–Sun)",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6798739",
+  },
+  {
+    label: "Weekend Evening",
+    icon: "🌇",
+    dates: "Aug 7 – Aug 29",
+    time: "9:00 – 10:30pm PST (Fri–Sat)",
+    link: "https://www.ideaweaver.ai/purchase?product_id=6798740",
+  },
+];
+
 const features = [
   {
     icon: "🏗️",
@@ -363,7 +467,7 @@ function AnnouncementBar() {
       <div className="pointer-events-none absolute inset-0 bg-[#09090b]/60" />
       <span className="relative">
         🚀{" "}
-        <span className="font-semibold text-white">GenAI for DevOps Engineers — New Batches Starting Jul 3 & 6</span>
+        <span className="font-semibold text-white">New August Batches Open — GenAI for DevOps · GenAI for Beginners · NVIDIA Certification</span>
         {" "}— Limited Seats Available.{" "}
         <a href="#courses" className="text-violet-300 underline decoration-violet-500/40 hover:text-violet-200">
           Enroll Now →
@@ -589,13 +693,21 @@ function BookCard({ book }: { book: Book }) {
 }
 
 /* ─── Courses Section ─── */
-type TabKey = "upcoming" | "past" | "books" | "free";
+type TabKey = "upcoming" | "inprogress" | "past" | "books" | "free";
 
 function CoursesSection() {
   const [tab, setTab] = useState<TabKey>("upcoming");
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText("help@ideaweaver.ai");
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2000);
+  };
 
   const tabs: { key: TabKey; label: string }[] = [
     { key: "upcoming", label: "🟢 Upcoming" },
+    { key: "inprogress", label: "🔄 In Progress" },
     { key: "past", label: "Past Courses" },
     { key: "books", label: "📚 Books" },
     { key: "free", label: "🎁 Free Course" },
@@ -639,14 +751,209 @@ function CoursesSection() {
           ))}
         </div>
 
-        {/* Upcoming */}
+        {/* ── Upcoming (August cohorts) ── */}
         {tab === "upcoming" && (
+          <div className="space-y-8">
+
+            {/* GenAI for DevOps Engineers – August */}
+            <div className="overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/[0.06] to-cyan-600/[0.04] p-8 sm:p-10">
+              <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="max-w-2xl">
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Enrolling Now · Aug 2026
+                  </div>
+                  <h3 className="text-2xl font-black text-white sm:text-3xl">GenAI for DevOps Engineers</h3>
+                  <p className="mt-2 text-sm text-zinc-400 leading-relaxed max-w-xl">
+                    A 4-week, instructor-led program for DevOps, Platform, and SRE engineers. From AWS Bedrock and Kubernetes AI to building autonomous DevOps agents and fine-tuning LLMs. Hands-on labs via Google Colab.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {["AWS Bedrock", "Kubernetes AI", "DevOps Agents", "CrewAI", "MCP", "RAG", "Fine-Tuning", "Google Colab Labs"].map((tag) => (
+                      <span key={tag} className="rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-0.5 text-xs font-medium text-blue-300">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="shrink-0 text-right">
+                  <span className="text-3xl font-black text-white">$49</span>
+                  <span className="ml-1 text-sm text-zinc-500">/cohort</span>
+                </div>
+              </div>
+              <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {upcomingCurriculum.map((w) => (
+                  <div key={w.week} className="rounded-xl border border-white/[0.08] bg-[#09090b] p-4">
+                    <div className="mb-1 text-xs font-semibold text-blue-400 uppercase tracking-wider">{w.week}</div>
+                    <div className="mb-2 text-xs font-bold text-white leading-snug">{w.title}</div>
+                    <ul className="space-y-1">
+                      {w.topics.map((topic) => (
+                        <li key={topic} className="flex items-start gap-1.5 text-xs text-zinc-500 leading-snug">
+                          <svg className="mt-0.5 h-2.5 w-2.5 shrink-0 text-blue-500/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" /></svg>
+                          {topic}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {augDevOpsBatches.map((b) => (
+                  <div key={b.label} className="flex flex-col gap-3 rounded-xl border border-white/[0.08] bg-[#09090b] p-5">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">{b.icon}</span>
+                      <span className="text-sm font-bold text-white">{b.label}</span>
+                    </div>
+                    <div className="space-y-1 text-xs text-zinc-400">
+                      <div className="flex items-center gap-1.5"><svg className="h-3.5 w-3.5 text-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>{b.dates}</div>
+                      <div className="flex items-center gap-1.5"><svg className="h-3.5 w-3.5 text-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>{b.time}</div>
+                    </div>
+                    <a href={b.link} target="_blank" rel="noopener noreferrer" className="mt-auto block rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 py-2 text-center text-xs font-semibold text-white transition hover:scale-[1.02]">Enroll →</a>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 flex flex-col gap-2 rounded-xl border border-white/[0.06] bg-[#111116] px-5 py-4 sm:flex-row sm:items-start sm:gap-6">
+                <div className="flex items-start gap-2.5"><span className="mt-0.5 text-base">📓</span><p className="text-xs text-zinc-400 leading-relaxed"><span className="font-semibold text-zinc-200">Google Colab labs included</span> — no local setup required.</p></div>
+                <div className="flex items-start gap-2.5 sm:border-l sm:border-white/[0.06] sm:pl-6"><span className="mt-0.5 text-base">☁️</span><p className="text-xs text-zinc-400 leading-relaxed"><span className="font-semibold text-zinc-200">AWS labs (Week 2)</span> require your own AWS account.</p></div>
+              </div>
+              <p className="mt-3 text-xs text-amber-400/70">All timings in PST — please adjust for your timezone.</p>
+            </div>
+
+            {/* GenAI for Beginners – August */}
+            <div className="overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/[0.06] to-teal-600/[0.04] p-8 sm:p-10">
+              <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="max-w-2xl">
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Enrolling Now · Aug 2026
+                  </div>
+                  <h3 className="text-2xl font-black text-white sm:text-3xl">GenAI for Beginners</h3>
+                  <p className="mt-2 text-sm text-zinc-400 leading-relaxed max-w-xl">
+                    A 4-week program for engineers new to Generative AI. Start from the fundamentals — prompting, LangChain, Hugging Face, and local inference — then progress to building real AI agents and workflows.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {["GenAI Foundations", "Prompt Engineering", "LangChain", "Hugging Face", "Ollama", "AI Agents", "RAG", "Google Colab Labs"].map((tag) => (
+                      <span key={tag} className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-0.5 text-xs font-medium text-emerald-300">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="shrink-0 text-right">
+                  <span className="text-3xl font-black text-white">$49</span>
+                  <span className="ml-1 text-sm text-zinc-500">/cohort</span>
+                </div>
+              </div>
+              <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {beginnersCurriculum.map((w) => (
+                  <div key={w.week} className="rounded-xl border border-white/[0.08] bg-[#09090b] p-4">
+                    <div className="mb-1 text-xs font-semibold text-emerald-400 uppercase tracking-wider">{w.week}</div>
+                    <div className="mb-2 text-xs font-bold text-white leading-snug">{w.title}</div>
+                    <ul className="space-y-1">
+                      {w.topics.map((topic) => (
+                        <li key={topic} className="flex items-start gap-1.5 text-xs text-zinc-500 leading-snug">
+                          <svg className="mt-0.5 h-2.5 w-2.5 shrink-0 text-emerald-500/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" /></svg>
+                          {topic}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {augBeginnersBatches.map((b) => (
+                  <div key={b.label} className="flex flex-col gap-3 rounded-xl border border-white/[0.08] bg-[#09090b] p-5">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">{b.icon}</span>
+                      <span className="text-sm font-bold text-white">{b.label}</span>
+                    </div>
+                    <div className="space-y-1 text-xs text-zinc-400">
+                      <div className="flex items-center gap-1.5"><svg className="h-3.5 w-3.5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>{b.dates}</div>
+                      <div className="flex items-center gap-1.5"><svg className="h-3.5 w-3.5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>{b.time}</div>
+                    </div>
+                    <a href={b.link} target="_blank" rel="noopener noreferrer" className="mt-auto block rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 py-2 text-center text-xs font-semibold text-white transition hover:scale-[1.02]">Enroll →</a>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-3 text-xs text-amber-400/70">All timings in PST — please adjust for your timezone.</p>
+            </div>
+
+            {/* NVIDIA Certification */}
+            <div className="overflow-hidden rounded-2xl border border-[#76b900]/30 bg-gradient-to-br from-[#76b900]/[0.05] to-green-600/[0.03] p-8 sm:p-10">
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+                <div className="max-w-2xl">
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#76b900]/30 bg-[#76b900]/10 px-3 py-1 text-xs font-semibold text-[#a3e635]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#76b900] animate-pulse" />
+                    Enrolling Now · Aug 2026 · 2-Day Intensive
+                  </div>
+                  <h3 className="text-2xl font-black text-white sm:text-3xl">NVIDIA-Certified Associate</h3>
+                  <p className="text-lg font-semibold text-[#a3e635] mb-3">AI Infrastructure and Operations (NCA-AIIO)</p>
+                  <p className="text-sm text-zinc-400 leading-relaxed max-w-xl">
+                    A 2-day intensive prep course for the NVIDIA-Certified Associate exam. Covers GPU vs CPU architecture, AI infrastructure design, cluster operations, GPU monitoring, datacenter management, and cloud vs on-prem trade-offs.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {["GPU Architecture", "AI Infrastructure", "Cluster Operations", "GPU Monitoring", "Power & Cooling", "Cloud vs On-Prem"].map((tag) => (
+                      <span key={tag} className="rounded-full border border-[#76b900]/20 bg-[#76b900]/10 px-3 py-0.5 text-xs font-medium text-[#a3e635]">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="shrink-0 text-right">
+                  <span className="text-3xl font-black text-white">$29</span>
+                  <span className="ml-1 text-sm text-zinc-500">/seat</span>
+                </div>
+              </div>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="flex items-center gap-6 rounded-xl border border-white/[0.08] bg-[#09090b] px-6 py-4">
+                  <div className="flex items-center gap-2 text-sm text-zinc-400"><svg className="h-4 w-4 text-[#76b900]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>Aug 1 – Aug 2, 2026</div>
+                  <div className="flex items-center gap-2 text-sm text-zinc-400"><svg className="h-4 w-4 text-[#76b900]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>7:00 – 9:00am PST</div>
+                </div>
+                <a href="https://www.ideaweaver.ai/purchase?product_id=6798743" target="_blank" rel="noopener noreferrer"
+                  className="inline-block rounded-xl bg-[#76b900] px-8 py-3 text-sm font-bold text-black transition hover:scale-[1.02] hover:bg-[#8fd400]">
+                  Enroll Now →
+                </a>
+              </div>
+              <p className="mt-4 text-xs text-amber-400/70">All timings in PST — please adjust for your timezone.</p>
+            </div>
+
+            {/* India payment option */}
+            <div className="overflow-hidden rounded-2xl border border-orange-500/25 bg-gradient-to-br from-orange-500/[0.05] to-amber-500/[0.03]">
+              <div className="flex items-center gap-2 border-b border-orange-500/15 px-6 py-3">
+                <span className="text-lg">🇮🇳</span>
+                <span className="text-sm font-bold text-orange-300">Special Payment Option for India</span>
+              </div>
+              <div className="flex flex-col gap-8 p-6 sm:flex-row sm:items-start">
+                <img src="/paytm-qr.jpg" alt="Paytm / UPI QR Code" className="w-44 shrink-0 rounded-xl border border-white/[0.08] self-center sm:self-start" />
+                <div className="flex flex-col gap-4">
+                  <div className="inline-flex items-baseline gap-1.5">
+                    <span className="text-3xl font-black text-white">₹4,500</span>
+                    <span className="text-sm text-zinc-500">/cohort</span>
+                  </div>
+                  <p className="text-sm text-zinc-300 leading-relaxed">You can pay using the Paytm / UPI QR code. Scan with any UPI app — Paytm, PhonePe, Google Pay, or BHIM.</p>
+                  <p className="text-sm text-zinc-400 leading-relaxed">After payment, please email your <span className="text-white font-semibold">transaction ID</span> and <span className="text-white font-semibold">registered email address</span> to:</p>
+                  <div className="flex items-center gap-2">
+                    <a href="mailto:help@ideaweaver.ai"
+                      className="inline-flex items-center gap-2 rounded-lg border border-orange-500/30 bg-orange-500/10 px-4 py-2.5 text-sm font-semibold text-orange-300 transition hover:bg-orange-500/20">
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                      help@ideaweaver.ai
+                    </a>
+                    <button onClick={copyEmail}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5 text-xs font-semibold text-zinc-400 transition hover:border-orange-500/30 hover:text-orange-300">
+                      {emailCopied
+                        ? <><svg className="h-3.5 w-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg><span className="text-emerald-400">Copied!</span></>
+                        : <><svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>Copy</>
+                      }
+                    </button>
+                  </div>
+                  <p className="text-xs text-zinc-500 leading-relaxed">We will confirm your enrollment and add you to the batch within 24 hours of receiving your email.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── In Progress (July cohorts) ── */}
+        {tab === "inprogress" && (
           <div className="overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/[0.06] to-cyan-600/[0.04] p-8 sm:p-10">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
               <div className="max-w-2xl">
                 <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-300">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  Enrolling Now · Jul 2026
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+                  In Progress · Jul 2026
                 </div>
                 <h3 className="text-2xl font-black text-white sm:text-3xl">GenAI for DevOps Engineers</h3>
                 <p className="mt-3 text-sm text-zinc-400 leading-relaxed max-w-xl">

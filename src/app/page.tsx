@@ -919,9 +919,16 @@ function CoursesSection() {
               <div className="flex flex-col gap-8 p-6 sm:flex-row sm:items-start">
                 <img src="/paytm-qr.jpg" alt="Paytm / UPI QR Code" className="w-44 shrink-0 rounded-xl border border-white/[0.08] self-center sm:self-start" />
                 <div className="flex flex-col gap-4">
-                  <div className="inline-flex items-baseline gap-1.5">
-                    <span className="text-3xl font-black text-white">₹4,500</span>
-                    <span className="text-sm text-zinc-500">/cohort</span>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <div className="inline-flex items-baseline gap-1.5">
+                      <span className="text-3xl font-black text-white">₹4,500</span>
+                      <span className="text-sm text-zinc-500">/cohort</span>
+                    </div>
+                    <span className="text-sm font-semibold text-zinc-600">OR</span>
+                    <div className="inline-flex items-baseline gap-1.5">
+                      <span className="text-3xl font-black text-white">₹2,500</span>
+                      <span className="text-sm text-zinc-500">NVIDIA Certification</span>
+                    </div>
                   </div>
                   <p className="text-sm text-zinc-300 leading-relaxed">You can pay using the Paytm / UPI QR code. Scan with any UPI app — Paytm, PhonePe, Google Pay, or BHIM.</p>
                   <p className="text-sm text-zinc-400 leading-relaxed">After payment, please email your <span className="text-white font-semibold">transaction ID</span> and <span className="text-white font-semibold">registered email address</span> to:</p>
@@ -1049,9 +1056,16 @@ function CoursesSection() {
                   className="w-44 shrink-0 rounded-xl border border-white/[0.08] self-center sm:self-start"
                 />
                 <div className="flex flex-col gap-4">
-                  <div className="inline-flex items-baseline gap-1.5">
-                    <span className="text-3xl font-black text-white">₹4,500</span>
-                    <span className="text-sm text-zinc-500">/cohort</span>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <div className="inline-flex items-baseline gap-1.5">
+                      <span className="text-3xl font-black text-white">₹4,500</span>
+                      <span className="text-sm text-zinc-500">/cohort</span>
+                    </div>
+                    <span className="text-sm font-semibold text-zinc-600">OR</span>
+                    <div className="inline-flex items-baseline gap-1.5">
+                      <span className="text-3xl font-black text-white">₹2,500</span>
+                      <span className="text-sm text-zinc-500">NVIDIA Certification</span>
+                    </div>
                   </div>
                   <p className="text-sm text-zinc-300 leading-relaxed">
                     You can pay using the Paytm / UPI QR code. Scan with any UPI app — Paytm, PhonePe, Google Pay, or BHIM.

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 /* ─── Types ─── */
 type Course = {
@@ -698,6 +698,28 @@ type TabKey = "upcoming" | "inprogress" | "past" | "books" | "free";
 function CoursesSection() {
   const [tab, setTab] = useState<TabKey>("upcoming");
   const [emailCopied, setEmailCopied] = useState(false);
+  const [courseFilter, setCourseFilter] = useState<string | null>(null);
+
+  useEffect(() => {
+    const parseHash = () => {
+      const parts = window.location.hash.slice(1).split("/");
+      if (parts[0] === "courses") {
+        if (parts[1]) {
+          setCourseFilter(parts[1]);
+          setTab("upcoming");
+          setTimeout(() => {
+            document.getElementById(`course-${parts[1]}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 100);
+        } else {
+          setCourseFilter(null);
+          document.getElementById("courses")?.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    };
+    parseHash();
+    window.addEventListener("hashchange", parseHash);
+    return () => window.removeEventListener("hashchange", parseHash);
+  }, []);
 
   const copyEmail = () => {
     navigator.clipboard.writeText("help@ideaweaver.ai");
@@ -756,7 +778,8 @@ function CoursesSection() {
           <div className="space-y-8">
 
             {/* GenAI for DevOps Engineers – August */}
-            <div className="overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/[0.06] to-cyan-600/[0.04] p-8 sm:p-10">
+            {(!courseFilter || courseFilter === "genai-for-devops-engineers") && (
+            <div id="course-genai-for-devops-engineers" className="overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/[0.06] to-cyan-600/[0.04] p-8 sm:p-10">
               <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="max-w-2xl">
                   <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-300">
@@ -815,9 +838,11 @@ function CoursesSection() {
               </div>
               <p className="mt-3 text-xs text-amber-400/70">All timings in PST — please adjust for your timezone.</p>
             </div>
+            )}
 
             {/* GenAI for Beginners – August */}
-            <div className="overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/[0.06] to-teal-600/[0.04] p-8 sm:p-10">
+            {(!courseFilter || courseFilter === "genai-for-beginners") && (
+            <div id="course-genai-for-beginners" className="overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/[0.06] to-teal-600/[0.04] p-8 sm:p-10">
               <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="max-w-2xl">
                   <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-300">
@@ -872,9 +897,11 @@ function CoursesSection() {
               </div>
               <p className="mt-3 text-xs text-amber-400/70">All timings in PST — please adjust for your timezone.</p>
             </div>
+            )}
 
             {/* NVIDIA Certification */}
-            <div className="overflow-hidden rounded-2xl border border-[#76b900]/30 bg-gradient-to-br from-[#76b900]/[0.05] to-green-600/[0.03] p-8 sm:p-10">
+            {(!courseFilter || courseFilter === "nvidia-certification") && (
+            <div id="course-nvidia-certification" className="overflow-hidden rounded-2xl border border-[#76b900]/30 bg-gradient-to-br from-[#76b900]/[0.05] to-green-600/[0.03] p-8 sm:p-10">
               <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
                 <div className="max-w-2xl">
                   <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#76b900]/30 bg-[#76b900]/10 px-3 py-1 text-xs font-semibold text-[#a3e635]">
@@ -909,6 +936,7 @@ function CoursesSection() {
               </div>
               <p className="mt-4 text-xs text-amber-400/70">All timings in PST — please adjust for your timezone.</p>
             </div>
+            )}
 
             {/* India payment option */}
             <div className="overflow-hidden rounded-2xl border border-orange-500/25 bg-gradient-to-br from-orange-500/[0.05] to-amber-500/[0.03]">
